@@ -1,1 +1,2 @@
-__version__ = '0.1.0'
+from .tk_grid_helper import *
+

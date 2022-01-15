@@ -14,15 +14,28 @@ class Row:
 
 
 class Grid:
-    def __init__(self):
-        pass
+    def __init__(self, parent, **kwargs):
+        self.parent = parent
+
+
+class DefaultRootWrapper:  # pragma: no cover
+    @property
+    def default_root(self):
+        return tk._default_root
+
+    @default_root.setter
+    def default_root(self, value):
+        tk._default_root = value
+
+
+default_root_wrapper = DefaultRootWrapper()
 
 
 @contextlib.contextmanager
-def grid_manager(master):
-    old_root = tk._default_root
-    tk._default_root = master
+def grid_manager(parent, **kwargs):
+    old_root = default_root_wrapper.default_root
+    default_root_wrapper.default_root = parent
     try:
-        yield Grid()
+        yield Grid(parent, **kwargs)
     finally:
-        tk._default_root = old_root
+        default_root_wrapper.default_root = old_root
