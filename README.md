@@ -1,5 +1,8 @@
 # Tkinter Grid Helper
 
+[![Python package](https://github.com/insolor/tk_grid_helper/actions/workflows/python-package.yml/badge.svg)](https://github.com/insolor/tk_grid_helper/actions/workflows/python-package.yml)
+[![Coverage Status](https://coveralls.io/repos/github/insolor/tk_grid_helper/badge.svg?branch=master)](https://coveralls.io/github/insolor/tk_grid_helper?branch=master)
+
 A library which is intended to simplify a placement of widgets using grid:
 
 - avoid manual calculation of indices of columns and rows when you add a widget;
