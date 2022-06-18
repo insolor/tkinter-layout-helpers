@@ -1,12 +1,12 @@
 
 import contextlib
 import tkinter as tk
-from typing import List
+from typing import List, ContextManager
 
 
 class Cell:
     def __init__(self, widget: tk.Widget, column_index: int, row_index: int,
-            **kwargs):
+                 **kwargs):
         self.widget = widget
         self.column_index = column_index
         self.row_index = row_index
@@ -18,18 +18,18 @@ class Cell:
 class Row:
     row_index: int
     column_index: int
-    items: List[Cell]
+    cells: List[Cell]
     
     def __init__(self, row_index: int):
         self.row_index = row_index
         self.column_index = 0
-        self.items = list()
+        self.cells = list()
     
-    def add(self, widget: tk.Widget, *args, **kwargs):  # --> Self
-        if self.items:
-            self.column_index += self.items[-1].column_span
+    def add(self, widget: tk.Widget, *args, **kwargs) -> "Row":  # -> self
+        if self.cells:
+            self.column_index += self.cells[-1].column_span
         
-        self.items.append(Cell(
+        self.cells.append(Cell(
             widget,
             self.column_index,
             self.row_index,
@@ -40,8 +40,8 @@ class Row:
         return self
     
     def column_span(self, span: int):  # --> Self
-        if self.items:
-            self.items[-1].column_span = span
+        if self.cells:
+            self.cells[-1].column_span = span
         
         return self
 
@@ -70,14 +70,14 @@ class Grid:
     
     def build(self):
         for row in self.rows:
-            for item in row.items:
+            for cell in row.cells:
                 kwargs = self.kwargs
-                kwargs.update(item.kwargs)
-                item.widget.grid(
-                    column=item.column_index,
-                    row=item.row_index,
-                    columnspan=item.column_span,
-                    rowspan=item.row_span,
+                kwargs.update(cell.kwargs)
+                cell.widget.grid(
+                    column=cell.column_index,
+                    row=cell.row_index,
+                    columnspan=cell.column_span,
+                    rowspan=cell.row_span,
                     **kwargs,
                 )
 
@@ -96,12 +96,12 @@ default_root_wrapper = DefaultRootWrapper()
 
 
 @contextlib.contextmanager
-def grid_manager(parent, **kwargs):
+def grid_manager(parent, **kwargs) -> ContextManager[Grid]:
     old_root = default_root_wrapper.default_root
     default_root_wrapper.default_root = parent
     try:
         grid = Grid(parent, **kwargs)
         yield grid
-    finally:
         grid.build()
+    finally:
         default_root_wrapper.default_root = old_root
