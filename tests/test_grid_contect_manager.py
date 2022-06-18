@@ -37,4 +37,4 @@ def test_grid_builder(mocker):
         [(0, 3), (3, 4)],
     ]
 
-    assert all(("sticky", "ew") in label.grid.call_args.kwargs.items() for label in labels)
+    assert all([("sticky", "ew") in label.grid.call_args.kwargs.items() for label in labels])
