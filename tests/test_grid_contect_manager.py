@@ -28,6 +28,13 @@ def test_grid_builder(mocker):
     with grid_manager(parent, sticky="ew") as grid:
         grid.new_row().add(labels[0]).add(labels[1]).column_span(2)
         grid.new_row().add(labels[2]).column_span(3).add(labels[3]).column_span(4)
+        grid.columnconfigure(0, weight=1)
+        grid.columnconfigure(1, weight=2)
+
+    assert [(call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list] == [
+        ((0,), dict(weight=1)),
+        ((1,), dict(weight=2))
+    ]
 
     column_columnspan = [
         [(cell.column_index, cell.column_span) for cell in row.cells] for row in grid.rows
