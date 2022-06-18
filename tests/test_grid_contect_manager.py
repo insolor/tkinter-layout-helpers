@@ -30,10 +30,17 @@ def test_grid_builder(mocker):
         grid.new_row().add(labels[2]).column_span(3).add(labels[3]).column_span(4)
         grid.columnconfigure(0, weight=1)
         grid.columnconfigure(1, weight=2)
+        grid.rowconfigure(0, weight=3)
+        grid.rowconfigure(1, weight=4)
 
     assert [(call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list] == [
         ((0,), dict(weight=1)),
         ((1,), dict(weight=2))
+    ]
+
+    assert [(call.args, call.kwargs) for call in parent.grid_rowconfigure.call_args_list] == [
+        ((0,), dict(weight=3)),
+        ((1,), dict(weight=4))
     ]
 
     column_columnspan = [
