@@ -16,33 +16,44 @@ class Cell:
 
 
 class Row:
+    grid: "Grid"
     row_index: int
     column_index: int
     cells: List[Cell]
-    
-    def __init__(self, row_index: int):
+
+    def __init__(self, grid: "Grid", row_index: int):
+        self.grid = grid
         self.row_index = row_index
         self.column_index = 0
         self.cells = list()
-    
+
     def add(self, widget: tk.Widget, **kwargs) -> "Row":  # -> self
         if self.cells:
             self.column_index += self.cells[-1].column_span
-        
+
         self.cells.append(Cell(
             widget,
             self.column_index,
             self.row_index,
             **kwargs,
         ))
-        
+
         return self
-    
-    def column_span(self, span: int):  # --> Self
+
+    def column_span(self, span: int):  # -> Self
         if self.cells:
             self.cells[-1].column_span = span
-        
+
         return self
+
+    def row_span(self, span: int):  # -> Self
+        if self.cells:
+            self.cells[-1].row_span = span
+
+        return self
+
+    def configure(self, *args, **kwargs):
+        self.grid.parent.grid_rowconfigure(self.row_index, *args, **kwargs)
 
 
 class Grid:
@@ -56,7 +67,7 @@ class Grid:
         self.kwargs = kwargs
     
     def new_row(self) -> Row:
-        row = Row(self.row_index)
+        row = Row(self, self.row_index)
         self.rows.append(row)
         self.row_index += 1
         return row
@@ -70,15 +81,18 @@ class Grid:
     def build(self):
         for row in self.rows:
             for cell in row.cells:
-                kwargs = self.kwargs
-                kwargs.update(cell.kwargs)
-                cell.widget.grid(
+                # Common kwargs have the lowest priority
+                kwargs = self.kwargs.copy()
+                # Then go parameters set by coll_span() and row_span()
+                kwargs.update(dict(
                     column=cell.column_index,
                     row=cell.row_index,
                     columnspan=cell.column_span,
                     rowspan=cell.row_span,
-                    **kwargs,
-                )
+                ))
+                # Parameters of add() override all the previous parameters
+                kwargs.update(cell.kwargs)
+                cell.widget.grid(**kwargs)
 
 
 class DefaultRootWrapper:  # pragma: no cover
