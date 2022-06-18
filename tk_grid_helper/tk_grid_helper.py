@@ -25,7 +25,7 @@ class Row:
         self.column_index = 0
         self.cells = list()
     
-    def add(self, widget: tk.Widget, *args, **kwargs) -> "Row":  # -> self
+    def add(self, widget: tk.Widget, **kwargs) -> "Row":  # -> self
         if self.cells:
             self.column_index += self.cells[-1].column_span
         
@@ -33,7 +33,6 @@ class Row:
             widget,
             self.column_index,
             self.row_index,
-            *args,
             **kwargs,
         ))
         
