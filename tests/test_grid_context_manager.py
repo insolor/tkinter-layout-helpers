@@ -33,12 +33,12 @@ def test_grid_builder(mocker):
         grid.rowconfigure(0, weight=3)
         grid.rowconfigure(1, weight=4)
 
-    assert [(call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list] == [
+    assert [(tuple(call.args), dict(call.kwargs)) for call in parent.grid_columnconfigure.call_args_list] == [
         ((0,), dict(weight=1)),
         ((1,), dict(weight=2))
     ]
 
-    assert [(call.args, call.kwargs) for call in parent.grid_rowconfigure.call_args_list] == [
+    assert [(tuple(call.args), dict(call.kwargs)) for call in parent.grid_rowconfigure.call_args_list] == [
         ((0,), dict(weight=3)),
         ((1,), dict(weight=4))
     ]
