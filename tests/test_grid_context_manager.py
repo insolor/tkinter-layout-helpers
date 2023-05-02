@@ -6,7 +6,9 @@ from tk_grid_helper import grid_manager
 
 def test_grid_manager(mocker):
     default_root_wrapper = mocker.Mock()
-    mocker.patch("tk_grid_helper.tk_grid_helper.default_root_wrapper", default_root_wrapper)
+    mocker.patch(
+        "tk_grid_helper.tk_grid_helper.default_root_wrapper", default_root_wrapper
+    )
 
     old_default_root = mocker.Mock(name="old default_root")
     default_root_wrapper.default_root = old_default_root
@@ -33,22 +35,29 @@ def test_grid_builder(mocker):
         grid.rowconfigure(0, weight=3)
         grid.rowconfigure(1, weight=4)
 
-    assert [(call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list] == [
+    assert [
+        (call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list
+    ] == [
         ((0,), dict(weight=1)),
-        ((1,), dict(weight=2))
+        ((1,), dict(weight=2)),
     ]
 
-    assert [(call.args, call.kwargs) for call in parent.grid_rowconfigure.call_args_list] == [
+    assert [
+        (call.args, call.kwargs) for call in parent.grid_rowconfigure.call_args_list
+    ] == [
         ((0,), dict(weight=3)),
-        ((1,), dict(weight=4))
+        ((1,), dict(weight=4)),
     ]
 
     column_columnspan = [
-        [(cell.column_index, cell.column_span) for cell in row.cells] for row in grid.rows
+        [(cell.column_index, cell.column_span) for cell in row.cells]
+        for row in grid.rows
     ]
     assert column_columnspan == [
         [(0, 1), (1, 2)],
         [(0, 3), (3, 4)],
     ]
 
-    assert all([("sticky", "ew") in label.grid.call_args.kwargs.items() for label in labels])
+    assert all(
+        [("sticky", "ew") in label.grid.call_args.kwargs.items() for label in labels]
+    )
