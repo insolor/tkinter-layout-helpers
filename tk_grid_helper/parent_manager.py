@@ -13,14 +13,14 @@ class DefaultRootWrapper:  # pragma: no cover
         tk._default_root = value  # type: ignore
 
 
-__default_root_wrapper = DefaultRootWrapper()
+_default_root_wrapper = DefaultRootWrapper()
 
 
 @contextlib.contextmanager
 def set_parent(parent: tk.Widget) -> Iterator[tk.Widget]:
-    old_root = __default_root_wrapper.default_root
-    __default_root_wrapper.default_root = parent
+    old_root = _default_root_wrapper.default_root
+    _default_root_wrapper.default_root = parent
     try:
         yield parent
     finally:
-        __default_root_wrapper.default_root = old_root
+        _default_root_wrapper.default_root = old_root
