@@ -17,10 +17,10 @@ default_root_wrapper = DefaultRootWrapper()
 
 
 @contextlib.contextmanager
-def set_parent(parent) -> ContextManager:
+def set_parent(parent: tk.Widget) -> ContextManager[tk.Widget]:
     old_root = default_root_wrapper.default_root
     default_root_wrapper.default_root = parent
     try:
-        yield
+        yield parent
     finally:
         default_root_wrapper.default_root = old_root
