@@ -2,6 +2,8 @@ import contextlib
 import tkinter as tk
 from typing import List, ContextManager
 
+from tk_grid_helper.parent_manager import set_parent
+
 
 class Cell:
     def __init__(self, widget: tk.Widget, column_index: int, row_index: int, **kwargs):
@@ -105,26 +107,9 @@ class Grid:
                 cell.widget.grid(**kwargs)
 
 
-class DefaultRootWrapper:  # pragma: no cover
-    @property
-    def default_root(self) -> tk.Tk:
-        return tk._default_root
-
-    @default_root.setter
-    def default_root(self, value):
-        tk._default_root = value
-
-
-default_root_wrapper = DefaultRootWrapper()
-
-
 @contextlib.contextmanager
 def grid_manager(parent, **kwargs) -> ContextManager[Grid]:
-    old_root = default_root_wrapper.default_root
-    default_root_wrapper.default_root = parent
-    try:
+    with set_parent(parent):
         grid = Grid(parent, **kwargs)
         yield grid
         grid.build()
-    finally:
-        default_root_wrapper.default_root = old_root
