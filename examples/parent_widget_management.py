@@ -11,7 +11,7 @@ def on_button_press():
     with set_parent(tk.Toplevel()) as dialog:
         tk.Label(text="In the child window").pack()
         dialog.wait_window()
-    
+
     tk.Label(text="In the main window again").pack()
 
 

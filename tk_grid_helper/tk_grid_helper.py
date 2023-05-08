@@ -1,6 +1,6 @@
 import contextlib
 import tkinter as tk
-from typing import List, ContextManager
+from typing import Iterator, List
 
 from tk_grid_helper.parent_manager import set_parent
 
@@ -108,7 +108,7 @@ class Grid:
 
 
 @contextlib.contextmanager
-def grid_manager(parent, **kwargs) -> ContextManager[Grid]:
+def grid_manager(parent, **kwargs) -> Iterator[Grid]:
     with set_parent(parent):
         grid = Grid(parent, **kwargs)
         yield grid
