@@ -1,9 +1,9 @@
-# Tkinter Grid Helper
+# Tkinter Layout Helpers
 
 [![Python package](https://github.com/insolor/tk_grid_helper/actions/workflows/python-package.yml/badge.svg)](https://github.com/insolor/tk_grid_helper/actions/workflows/python-package.yml)
 [![Coverage Status](https://coveralls.io/repos/github/insolor/tk_grid_helper/badge.svg?branch=master)](https://coveralls.io/github/insolor/tk_grid_helper?branch=master)
 
-A library which is intended to simplify a placement of widgets using grid:
+A library which is intended to simplify a placement of widgets:
 
 - avoid manual calculation of indices of columns and rows when you add a widget;
 - avoid typing-in some common parameters (like `sticky=tk.EW`) each time you add a widget;
@@ -13,7 +13,7 @@ Work in progress.
 
 As an example, this code:
 
-https://github.com/insolor/tkinter_layout_helper/blob/7df35817cadaa4bf961319c4637de8aac97fc760/examples/staircase.py#L7-L24
+https://github.com/insolor/tkinter_layout_helpers/blob/b24f9d27e884ec6b1521d61d5cafe79758fb1538/examples/staircase.py#L7-L24
 
 Gives the following result:
 
