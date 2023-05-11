@@ -6,7 +6,8 @@ from tkinter_layout_helpers.parent_manager import set_parent
 
 
 def pack_expanded(widget: tk.Widget, **kwargs):
-    widget.pack(fill=tk.BOTH, expand=True, **kwargs)
+    kwargs.update(dict(fill=tk.BOTH, expand=True))
+    widget.pack(**kwargs)
 
 
 class Packer:
@@ -17,20 +18,34 @@ class Packer:
         self.parent = parent
         self.kwargs = kwargs
 
-    def pack_all(self, *args: tk.Widget):
+    def pack_all(self, *args: tk.Widget, **kwargs):
+        kwargs.update(self.kwargs)
         for item in args:
-            item.pack(**self.kwargs)
+            item.pack(**kwargs)
 
     def pack(self, widget: tk.Widget, **kwargs):
-        widget.pack(**self.kwargs, **kwargs)
+        kwargs.update(self.kwargs)
+        widget.pack(**kwargs)
         return self
 
     def pack_left(self, widget: tk.Widget, **kwargs):
-        widget.pack(side=tk.LEFT, **self.kwargs, **kwargs)
+        kwargs.update(self.kwargs)
+        widget.pack(side=tk.LEFT, **kwargs)
         return self
 
     def pack_right(self, widget: tk.Widget, **kwargs):
-        widget.pack(side=tk.RIGHT, **self.kwargs, **kwargs)
+        kwargs.update(self.kwargs)
+        widget.pack(side=tk.RIGHT, **kwargs)
+        return self
+
+    def pack_top(self, widget: tk.Widget, **kwargs):
+        kwargs.update(self.kwargs)
+        widget.pack(side=tk.TOP, **kwargs)
+        return self
+
+    def pack_bottom(self, widget: tk.Widget, **kwargs):
+        kwargs.update(self.kwargs)
+        widget.pack(side=tk.BOTTOM, **kwargs)
         return self
 
     def pack_expanded(self, widget: tk.Widget, **kwargs):
