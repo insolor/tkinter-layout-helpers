@@ -1,8 +1,6 @@
 import pytest
 
-from tkinter_layout_helpers.grid_helper import grid_manager
-from tkinter_layout_helpers.pack_helper import pack_manager
-from tkinter_layout_helpers.parent_manager import set_parent
+from tkinter_layout_helpers import grid_manager, pack_manager, set_parent
 
 
 @pytest.mark.parametrize("context_manager", [set_parent, grid_manager, pack_manager])

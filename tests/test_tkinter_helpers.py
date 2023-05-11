@@ -1,6 +1,6 @@
 import pytest
 
-from tkinter_layout_helpers.pack_helper import pack_manager
+from tkinter_layout_helpers import pack_manager
 
 
 def test_packer(mocker):
