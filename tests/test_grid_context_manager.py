@@ -7,7 +7,7 @@ from tkinter_layout_helpers import grid_manager
 def test_grid_manager(mocker):
     default_root_wrapper = mocker.Mock()
     mocker.patch(
-        "tkinter_layout_helper.parent_manager._default_root_wrapper", default_root_wrapper
+        "tkinter_layout_helpers.parent_manager._default_root_wrapper", default_root_wrapper
     )
 
     old_default_root = mocker.Mock(name="old default_root")
