@@ -4,7 +4,7 @@ using a context manager
 """
 import tkinter as tk
 
-from tkinter_layout_helper.parent_manager import set_parent
+from tkinter_layout_helpers.parent_manager import set_parent
 
 
 def on_button_press():

@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from tkinter_layout_helper import grid_manager
+from tkinter_layout_helpers import grid_manager
 
 root = tk.Tk()
 

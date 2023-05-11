@@ -1,7 +1,7 @@
 from contextlib import suppress
 from typing import List
 
-from tkinter_layout_helper import grid_manager
+from tkinter_layout_helpers import grid_manager
 
 
 def test_grid_manager(mocker):
