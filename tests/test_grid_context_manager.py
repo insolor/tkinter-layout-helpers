@@ -1,13 +1,13 @@
 from contextlib import suppress
 from typing import List
 
-from tk_grid_helper import grid_manager
+from tkinter_layout_helper import grid_manager
 
 
 def test_grid_manager(mocker):
     default_root_wrapper = mocker.Mock()
     mocker.patch(
-        "tk_grid_helper.parent_manager._default_root_wrapper", default_root_wrapper
+        "tkinter_layout_helper.parent_manager._default_root_wrapper", default_root_wrapper
     )
 
     old_default_root = mocker.Mock(name="old default_root")
