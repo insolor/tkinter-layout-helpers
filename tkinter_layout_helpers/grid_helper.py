@@ -1,6 +1,6 @@
 import contextlib
 import tkinter as tk
-from typing import Iterator, List
+from typing import Any, Iterator, List, Dict
 
 from tkinter_layout_helpers.parent_manager import set_parent
 
@@ -67,8 +67,10 @@ class Row:
 
 
 class Grid:
+    parent: tk.Widget
     rows: List[Row]
     row_index: int
+    kwargs: Dict[str, Any]
 
     def __init__(self, parent, **kwargs):
         self.parent = parent
