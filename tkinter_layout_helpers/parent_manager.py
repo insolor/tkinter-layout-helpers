@@ -6,7 +6,7 @@ from typing import Iterator
 class DefaultRootWrapper:  # pragma: no cover
     @property
     def default_root(self) -> tk.Widget:
-        return tk._default_root  # type: ignore
+        return tk._default_root  # type: ignore # noqa
 
     @default_root.setter
     def default_root(self, value: tk.Widget):
