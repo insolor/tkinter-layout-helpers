@@ -2,7 +2,7 @@ import contextlib
 import tkinter as tk
 from typing import Iterator, List
 
-from tk_grid_helper.parent_manager import set_parent
+from tkinter_layout_helper.parent_manager import set_parent
 
 
 class Cell:
