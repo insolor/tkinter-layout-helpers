@@ -1,6 +1,6 @@
 import contextlib
 import tkinter as tk
-from typing import Any, Iterator, List, Dict
+from typing import Any, Dict, Iterator, List
 
 from tkinter_layout_helpers.parent_manager import set_parent
 
