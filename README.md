@@ -13,7 +13,7 @@ Work in progress.
 
 As an example, this code:
 
-https://github.com/insolor/tk_grid_helper/blob/7df35817cadaa4bf961319c4637de8aac97fc760/examples/staircase.py#L7-L24
+https://github.com/insolor/tkinter_layout_helper/blob/7df35817cadaa4bf961319c4637de8aac97fc760/examples/staircase.py#L7-L24
 
 Gives the following result:
 

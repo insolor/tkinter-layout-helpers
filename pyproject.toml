@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "tk_grid_helper"
+name = "tkinter_layout_helper"
 version = "0.1.2"
 description = ""
 authors = ["insolor <insolor@gmail.com>"]
