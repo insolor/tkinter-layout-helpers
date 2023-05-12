@@ -3,7 +3,7 @@ from __future__ import annotations
 import contextlib
 import tkinter as tk
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Union
+from typing import Any, ContextManager, Dict, List, Union
 
 from tkinter_layout_helpers.parent_manager import set_parent
 
@@ -108,7 +108,7 @@ class Grid:
 
 
 @contextlib.contextmanager
-def grid_manager(parent: Union[tk.Tk, tk.Widget], **kwargs) -> contextlib.AbstractContextManager[Grid]:
+def grid_manager(parent: Union[tk.Tk, tk.Widget], **kwargs) -> ContextManager[Grid]:
     with set_parent(parent):
         grid = Grid(parent, **kwargs)
         yield grid
