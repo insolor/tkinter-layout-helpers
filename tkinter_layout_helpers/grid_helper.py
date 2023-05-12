@@ -2,37 +2,28 @@ from __future__ import annotations
 
 import contextlib
 import tkinter as tk
+from dataclasses import dataclass, field
 from typing import Any, Dict, List, Union
 
 from tkinter_layout_helpers.parent_manager import set_parent
 
 
+@dataclass
 class Cell:
     widget: tk.Widget
     column_index: int
     row_index: int
-    kwargs: Dict[str, Any]
-
-    def __init__(self, widget: tk.Widget, column_index: int, row_index: int, **kwargs):
-        self.widget = widget
-        self.column_index = column_index
-        self.row_index = row_index
-        self.column_span = 1
-        self.row_span = 1
-        self.kwargs = kwargs
+    options: Dict[str, Any] = field(default_factory=dict)
+    column_span: int = field(default=1, init=False)
+    row_span: int = field(default=1, init=False)
 
 
+@dataclass
 class Row:
     __grid: Grid
     __row_index: int
-    __column_index: int
-    __cells: List[Cell]
-
-    def __init__(self, grid: Grid, row_index: int):
-        self.__grid = grid
-        self.__row_index = row_index
-        self.__column_index = 0
-        self.__cells = list()
+    __column_index: int = field(default=0, init=False)
+    __cells: List[Cell] = field(default_factory=list, init=False)
 
     def skip(self, count: int) -> Row:  # -> self
         self.__column_index += count
@@ -47,7 +38,7 @@ class Row:
                 widget,
                 self.__column_index,
                 self.__row_index,
-                **kwargs,
+                options=kwargs,
             )
         )
 
@@ -112,7 +103,7 @@ class Grid:
                     )
                 )
                 # Parameters of add() override all the previous parameters
-                kwargs.update(cell.kwargs)
+                kwargs.update(cell.options)
                 cell.widget.grid(**kwargs)
 
 
