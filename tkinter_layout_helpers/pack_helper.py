@@ -1,6 +1,6 @@
 import contextlib
 import tkinter as tk
-from typing import Any, Iterator, Mapping
+from typing import Any, Mapping
 
 from tkinter_layout_helpers.parent_manager import set_parent
 
@@ -12,49 +12,49 @@ def pack_expanded(widget: tk.Widget, **kwargs):
 
 class Packer:
     parent: tk.Widget
-    kwargs: Mapping[str, Any]
+    __kwargs: Mapping[str, Any]
 
-    def __init__(self, parent, **kwargs):
+    def __init__(self, parent: tk.Widget, **kwargs):
         self.parent = parent
-        self.kwargs = kwargs
+        self.__kwargs = kwargs
 
     def pack_all(self, *args: tk.Widget, **kwargs):
-        kwargs.update(self.kwargs)
+        kwargs.update(self.__kwargs)
         for item in args:
             item.pack(**kwargs)
 
     def pack(self, widget: tk.Widget, **kwargs):
-        kwargs.update(self.kwargs)
+        kwargs.update(self.__kwargs)
         widget.pack(**kwargs)
         return self
 
     def pack_left(self, widget: tk.Widget, **kwargs):
-        kwargs.update(self.kwargs)
+        kwargs.update(self.__kwargs)
         widget.pack(side=tk.LEFT, **kwargs)
         return self
 
     def pack_right(self, widget: tk.Widget, **kwargs):
-        kwargs.update(self.kwargs)
+        kwargs.update(self.__kwargs)
         widget.pack(side=tk.RIGHT, **kwargs)
         return self
 
     def pack_top(self, widget: tk.Widget, **kwargs):
-        kwargs.update(self.kwargs)
+        kwargs.update(self.__kwargs)
         widget.pack(side=tk.TOP, **kwargs)
         return self
 
     def pack_bottom(self, widget: tk.Widget, **kwargs):
-        kwargs.update(self.kwargs)
+        kwargs.update(self.__kwargs)
         widget.pack(side=tk.BOTTOM, **kwargs)
         return self
 
     def pack_expanded(self, widget: tk.Widget, **kwargs):
-        pack_expanded(widget, **self.kwargs, **kwargs)
+        pack_expanded(widget, **self.__kwargs, **kwargs)
         return self
 
 
 @contextlib.contextmanager
-def pack_manager(parent, **kwargs) -> Iterator[Packer]:
+def pack_manager(parent: tk.Widget, **kwargs) -> contextlib.AbstractContextManager[Packer]:
     with set_parent(parent):
         packer = Packer(parent, **kwargs)
         yield packer

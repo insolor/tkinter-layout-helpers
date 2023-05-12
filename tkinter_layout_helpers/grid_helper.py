@@ -1,11 +1,18 @@
+from __future__ import annotations
+
 import contextlib
 import tkinter as tk
-from typing import Any, Dict, Iterator, List
+from typing import Any, Dict, List, Union
 
 from tkinter_layout_helpers.parent_manager import set_parent
 
 
 class Cell:
+    widget: tk.Widget
+    column_index: int
+    row_index: int
+    kwargs: Dict[str, Any]
+
     def __init__(self, widget: tk.Widget, column_index: int, row_index: int, **kwargs):
         self.widget = widget
         self.column_index = column_index
@@ -16,22 +23,22 @@ class Cell:
 
 
 class Row:
-    __grid: "Grid"
+    __grid: Grid
     __row_index: int
     __column_index: int
     __cells: List[Cell]
 
-    def __init__(self, grid: "Grid", row_index: int):
+    def __init__(self, grid: Grid, row_index: int):
         self.__grid = grid
         self.__row_index = row_index
         self.__column_index = 0
         self.__cells = list()
 
-    def skip(self, count: int) -> "Row":  # -> self
+    def skip(self, count: int) -> Row:  # -> self
         self.__column_index += count
         return self
 
-    def add(self, widget: tk.Widget, **kwargs) -> "Row":  # -> self
+    def add(self, widget: tk.Widget, **kwargs) -> Row:  # -> self
         if self.__cells:
             self.__column_index += self.__cells[-1].column_span
 
@@ -46,13 +53,13 @@ class Row:
 
         return self
 
-    def column_span(self, span: int) -> "Row":  # -> Self
+    def column_span(self, span: int) -> Row:  # -> Self
         if self.__cells:
             self.__cells[-1].column_span = span
 
         return self
 
-    def row_span(self, span: int) -> "Row":  # -> Self
+    def row_span(self, span: int) -> Row:  # -> Self
         if self.__cells:
             self.__cells[-1].row_span = span
 
@@ -69,19 +76,19 @@ class Row:
 class Grid:
     parent: tk.Widget
     rows: List[Row]
-    row_index: int
-    kwargs: Dict[str, Any]
+    __row_index: int
+    __kwargs: Dict[str, Any]
 
-    def __init__(self, parent, **kwargs):
+    def __init__(self, parent: tk.Widget, **kwargs):
         self.parent = parent
         self.rows = []
-        self.row_index = 0
-        self.kwargs = kwargs
+        self.__row_index = 0
+        self.__kwargs = kwargs
 
     def new_row(self) -> Row:
-        row = Row(self, self.row_index)
+        row = Row(self, self.__row_index)
         self.rows.append(row)
-        self.row_index += 1
+        self.__row_index += 1
         return row
 
     def columnconfigure(self, i, *args, **kwargs):
@@ -94,7 +101,7 @@ class Grid:
         for row in self.rows:
             for cell in row.cells:
                 # Common kwargs have the lowest priority
-                kwargs = self.kwargs.copy()
+                kwargs = self.__kwargs.copy()
                 # Then go parameters set by coll_span() and row_span()
                 kwargs.update(
                     dict(
@@ -110,7 +117,7 @@ class Grid:
 
 
 @contextlib.contextmanager
-def grid_manager(parent, **kwargs) -> Iterator[Grid]:
+def grid_manager(parent: Union[tk.Tk, tk.Widget], **kwargs) -> contextlib.AbstractContextManager[Grid]:
     with set_parent(parent):
         grid = Grid(parent, **kwargs)
         yield grid
