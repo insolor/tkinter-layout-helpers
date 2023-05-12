@@ -1,3 +1,4 @@
+from operator import attrgetter
 from typing import List
 
 from tkinter_layout_helpers import grid_manager
@@ -40,3 +41,40 @@ def test_grid_builder(mocker):
     assert all(
         [("sticky", "ew") in label.grid.call_args.kwargs.items() for label in labels]
     )
+
+
+def test_grid_span_and_skip(mocker):
+    parent = mocker.Mock(name="parent")
+    widget = mocker.Mock(name="widget")
+    with grid_manager(parent, sticky="nsew") as grid:
+        grid.new_row().add(widget).column_span(2) \
+            .add(widget).row_span(2).configure(weight=1)
+
+        grid.new_row().add(widget).configure(weight=1)
+        grid.new_row().skip(1).add(widget).configure(weight=1)
+
+        grid.columnconfigure(0, weight=1)
+        grid.columnconfigure(1, weight=1)
+        grid.columnconfigure(2, weight=1)
+
+    # Check widget .grid() arguments
+    assert list(map(attrgetter("kwargs"), widget.grid.call_args_list)) == [
+        dict(row=0, column=0, columnspan=2, rowspan=1, sticky="nsew"),
+        dict(row=0, column=2, columnspan=1, rowspan=2, sticky="nsew"),
+        dict(row=1, column=0, columnspan=1, rowspan=1, sticky="nsew"),
+        dict(row=2, column=1, columnspan=1, rowspan=1, sticky="nsew"),
+    ]
+
+    # Check .grid_columnconfigure() arguments
+    assert list(map(lambda x: (x.args, x.kwargs), parent.grid_columnconfigure.call_args_list)) == [
+        ((0,), dict(weight=1)),
+        ((1,), dict(weight=1)),
+        ((2,), dict(weight=1)),
+    ]
+
+    # Check .grid_columnconfigure() arguments
+    assert list(map(lambda x: (x.args, x.kwargs), parent.grid_rowconfigure.call_args_list)) == [
+        ((0,), dict(weight=1)),
+        ((1,), dict(weight=1)),
+        ((2,), dict(weight=1)),
+    ]
