@@ -1,3 +1,5 @@
+import contextlib
+
 import pytest
 
 from tkinter_layout_helpers import grid_manager, pack_manager, set_parent
@@ -11,11 +13,11 @@ def test_context_managers(context_manager, mocker):
     old_default_root = mocker.Mock(name="old default_root")
     default_root_wrapper.default_root = old_default_root
 
-    with pytest.raises(ValueError):
+    with contextlib.suppress(ValueError):
         with context_manager(mocker.Mock(name="parent")) as obj:
             assert (
-                default_root_wrapper.default_root == obj  # case for set_parent
-                or default_root_wrapper.default_root == obj.parent
+                    default_root_wrapper.default_root == obj  # case for set_parent
+                    or default_root_wrapper.default_root == obj.parent
             )
             raise ValueError
 

@@ -56,5 +56,5 @@ class Packer:
 @contextlib.contextmanager
 def pack_manager(parent, **kwargs) -> Iterator[Packer]:
     with set_parent(parent):
-        grid = Packer(parent, **kwargs)
-        yield grid
+        packer = Packer(parent, **kwargs)
+        yield packer
