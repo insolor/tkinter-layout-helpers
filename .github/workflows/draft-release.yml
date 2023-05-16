@@ -1,0 +1,34 @@
+name: Draft Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Draft Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Install poetry
+        run: pipx install poetry
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+          cache: "poetry"
+          cache-dependency-path: poetry.lock
+      
+      - name: Build project
+        run: |
+          poetry build
+          echo "version=$(poetry version --short)" >> "$GITHUB_ENV"
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          tag_name: ${{ env.version }}
+          draft: true
