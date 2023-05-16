@@ -1,6 +1,6 @@
 # Tkinter Layout Helpers
 
-[![Python package](https://github.com/insolor/tkinter_layout_helpers/actions/workflows/python-package.yml/badge.svg)](https://github.com/insolor/tkinter_layout_helpers/actions/workflows/python-package.yml)
+[![Python package](https://github.com/insolor/tkinter_layout_helpers/actions/workflows/python-tests.yml/badge.svg)](https://github.com/insolor/tkinter_layout_helpers/actions/workflows/python-tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/insolor/tkinter_layout_helpers/badge.svg?branch=master)](https://coveralls.io/github/insolor/tkinter_layout_helpers?branch=master)
 
 A library which is intended to simplify a placement of widgets:
