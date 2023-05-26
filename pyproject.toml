@@ -1,8 +1,20 @@
 [tool.poetry]
 name = "tkinter_layout_helpers"
 version = "0.2.0"
-description = ""
+description = "A library which is intended to simplify a placement of widgets with .grid() and .pack() methods"
 authors = ["insolor <insolor@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/insolor/tkinter_layout_helpers"
+repository = "https://github.com/insolor/tkinter_layout_helpers"
+keywords = ["tkinter", "grid", "pack"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
