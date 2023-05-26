@@ -1,6 +1,6 @@
 import contextlib
 import tkinter as tk
-from typing import ContextManager
+from typing import ContextManager, Union
 
 
 class DefaultRootWrapper:  # pragma: no cover
@@ -17,7 +17,7 @@ _default_root_wrapper = DefaultRootWrapper()
 
 
 @contextlib.contextmanager
-def set_parent(parent: tk.Widget) -> ContextManager[tk.Widget]:
+def set_parent(parent: Union[tk.Tk, tk.Toplevel, tk.Widget]) -> ContextManager[tk.Widget]:
     old_root = _default_root_wrapper.default_root
     _default_root_wrapper.default_root = parent
     try:
