@@ -3,7 +3,7 @@
 [![Python package](https://github.com/insolor/tkinter_layout_helpers/actions/workflows/python-tests.yml/badge.svg)](https://github.com/insolor/tkinter_layout_helpers/actions/workflows/python-tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/insolor/tkinter_layout_helpers/badge.svg?branch=master)](https://coveralls.io/github/insolor/tkinter_layout_helpers?branch=master)
 
-A library which is intended to simplify a placement of widgets with `.grid()` and `.place()` methods:
+A library which is intended to simplify a placement of widgets with `.grid()` and `.pack()` methods:
 
 - avoid manual calculation of indices of columns and rows when you add a widget;
 - avoid typing-in some common parameters (like `sticky=tk.EW`) each time you add a widget;
