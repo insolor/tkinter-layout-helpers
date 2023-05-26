@@ -108,7 +108,7 @@ class Grid:
 
 
 @contextlib.contextmanager
-def grid_manager(parent: Union[tk.Tk, tk.Widget], **kwargs) -> ContextManager[Grid]:
+def grid_manager(parent: Union[tk.Tk, tk.Toplevel, tk.Widget], **kwargs) -> ContextManager[Grid]:
     with set_parent(parent):
         grid = Grid(parent, **kwargs)
         yield grid
