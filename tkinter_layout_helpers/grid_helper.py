@@ -3,9 +3,9 @@ from __future__ import annotations
 import contextlib
 import tkinter as tk
 from dataclasses import dataclass, field
-from typing import Any, ContextManager, Dict, List, Union
+from typing import Any, ContextManager, Dict, Generic, List
 
-from tkinter_layout_helpers.parent_manager import set_parent
+from tkinter_layout_helpers.parent_manager import TParent, set_parent
 
 
 @dataclass
@@ -64,13 +64,13 @@ class Row:
         return self.__cells
 
 
-class Grid:
-    parent: tk.Widget
+class Grid(Generic[TParent]):
+    parent: TParent
     rows: List[Row]
     __row_index: int
     __kwargs: Dict[str, Any]
 
-    def __init__(self, parent: tk.Widget, **kwargs):
+    def __init__(self, parent: TParent, **kwargs):
         self.parent = parent
         self.rows = []
         self.__row_index = 0
@@ -108,7 +108,7 @@ class Grid:
 
 
 @contextlib.contextmanager
-def grid_manager(parent: Union[tk.Tk, tk.Toplevel, tk.Widget], **kwargs) -> ContextManager[Grid]:
+def grid_manager(parent: TParent, **kwargs) -> ContextManager[Grid]:
     with set_parent(parent):
         grid = Grid(parent, **kwargs)
         yield grid

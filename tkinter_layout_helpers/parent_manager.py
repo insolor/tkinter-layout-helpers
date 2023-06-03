@@ -2,6 +2,8 @@ import contextlib
 import tkinter as tk
 from typing import ContextManager, TypeVar, Union
 
+TParent = TypeVar("TParent", bound=Union[tk.Tk, tk.Toplevel, tk.Widget])
+
 
 class DefaultRootWrapper:  # pragma: no cover
     @property
@@ -9,13 +11,11 @@ class DefaultRootWrapper:  # pragma: no cover
         return tk._default_root  # type: ignore # noqa
 
     @default_root.setter
-    def default_root(self, value: tk.Widget):
+    def default_root(self, value: TParent):
         tk._default_root = value  # type: ignore
 
 
 _default_root_wrapper = DefaultRootWrapper()
-
-TParent = TypeVar("TParent", bound=Union[tk.Tk, tk.Toplevel, tk.Widget])
 
 
 @contextlib.contextmanager

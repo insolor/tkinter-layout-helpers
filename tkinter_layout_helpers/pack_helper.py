@@ -1,8 +1,8 @@
 import contextlib
 import tkinter as tk
-from typing import Any, ContextManager, Mapping, Union
+from typing import Any, ContextManager, Generic, Mapping
 
-from tkinter_layout_helpers.parent_manager import set_parent
+from tkinter_layout_helpers.parent_manager import TParent, set_parent
 
 
 def pack_expanded(widget: tk.Widget, **kwargs):
@@ -10,11 +10,11 @@ def pack_expanded(widget: tk.Widget, **kwargs):
     widget.pack(**kwargs)
 
 
-class Packer:
-    parent: tk.Widget
+class Packer(Generic[TParent]):
+    parent: TParent
     __kwargs: Mapping[str, Any]
 
-    def __init__(self, parent: tk.Widget, **kwargs):
+    def __init__(self, parent: TParent, **kwargs):
         self.parent = parent
         self.__kwargs = kwargs
 
@@ -54,7 +54,7 @@ class Packer:
 
 
 @contextlib.contextmanager
-def pack_manager(parent: Union[tk.Tk, tk.Toplevel, tk.Widget], **kwargs) -> ContextManager[Packer]:
+def pack_manager(parent: TParent, **kwargs) -> ContextManager[Packer]:
     with set_parent(parent):
         packer = Packer(parent, **kwargs)
         yield packer
