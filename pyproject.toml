@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tkinter_layout_helpers"
-version = "0.2.0"
+version = "0.3.0"
 description = "A library which is intended to simplify a placement of widgets with .grid() and .pack() methods"
 authors = ["insolor <insolor@gmail.com>"]
 license = "MIT"
