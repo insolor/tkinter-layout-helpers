@@ -1,9 +1,9 @@
 # Tkinter Layout Helpers
 
-[![Python package](https://github.com/insolor/tkinter_layout_helpers/actions/workflows/python-tests.yml/badge.svg)](https://github.com/insolor/tkinter_layout_helpers/actions/workflows/python-tests.yml)
-[![Coverage Status](https://coveralls.io/repos/github/insolor/tkinter_layout_helpers/badge.svg?branch=master)](https://coveralls.io/github/insolor/tkinter_layout_helpers?branch=master)
-[![PyPI](https://img.shields.io/pypi/v/tkinter_layout_helpers)](https://pypi.org/project/tkinter_layout_helpers/)
-![Supported Python versions](https://img.shields.io/pypi/pyversions/tkinter_layout_helpers)
+[![Python package](https://github.com/insolor/tkinter-layout-helpers/actions/workflows/python-tests.yml/badge.svg)](https://github.com/insolor/tkinter-layout-helpers/actions/workflows/python-tests.yml)
+[![Coverage Status](https://coveralls.io/repos/github/insolor/tkinter-layout-helpers/badge.svg?branch=master)](https://coveralls.io/github/insolor/tkinter-layout-helpers?branch=master)
+[![PyPI](https://img.shields.io/pypi/v/tkinter-layout-helpers)](https://pypi.org/project/tkinter-layout-helpers/)
+![Supported Python versions](https://img.shields.io/pypi/pyversions/tkinter-layout-helpers)
 
 
 A library which is intended to simplify a placement of widgets with `.grid()` and `.pack()` methods:
