@@ -5,8 +5,8 @@ description = "A library which is intended to simplify a placement of widgets wi
 authors = ["insolor <insolor@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/insolor/tkinter_layout_helpers"
-repository = "https://github.com/insolor/tkinter_layout_helpers"
+homepage = "https://github.com/insolor/tkinter-layout-helpers"
+repository = "https://github.com/insolor/tkinter-layout-helpers"
 keywords = ["tkinter", "grid", "pack"]
 classifiers = [
     "Development Status :: 4 - Beta",
