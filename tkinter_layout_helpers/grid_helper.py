@@ -5,6 +5,8 @@ import tkinter as tk
 from dataclasses import dataclass, field
 from typing import Any, ContextManager, Dict, Generic, List
 
+from typing_extensions import Self
+
 from tkinter_layout_helpers.parent_manager import TParent, set_parent
 
 
@@ -25,11 +27,11 @@ class Row:
     __column_index: int = field(default=0, init=False)
     __cells: List[Cell] = field(default_factory=list, init=False)
 
-    def skip(self, count: int) -> Row:  # -> self
+    def skip(self, count: int) -> Self:
         self.__column_index += count
         return self
 
-    def add(self, widget: tk.Widget, **kwargs) -> Row:  # -> self
+    def add(self, widget: tk.Widget, **kwargs) -> Self:
         if self.__cells:
             self.__column_index += self.__cells[-1].column_span
 
@@ -44,13 +46,13 @@ class Row:
 
         return self
 
-    def column_span(self, span: int) -> Row:  # -> Self
+    def column_span(self, span: int) -> Self:
         if self.__cells:
             self.__cells[-1].column_span = span
 
         return self
 
-    def row_span(self, span: int) -> Row:  # -> Self
+    def row_span(self, span: int) -> Self:
         if self.__cells:
             self.__cells[-1].row_span = span
 
