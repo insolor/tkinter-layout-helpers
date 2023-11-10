@@ -1,21 +1,21 @@
 name: Python tests
 
 on:
-    push:
-      branches: [ master ]
-      paths:
-        - 'pyproject.toml'
-        - 'poetry.lock'
-        - '**.py'
-        - '.github/workflows/python-tests.yml'
+  push:
+    branches: [ master ]
+    paths:
+      - 'pyproject.toml'
+      - 'poetry.lock'
+      - '**.py'
+      - '.github/workflows/python-tests.yml'
 
-    pull_request:
-      branches: [ master ]
-      paths:
-        - 'pyproject.toml'
-        - 'poetry.lock'
-        - '**.py'
-        - '.github/workflows/python-tests.yml'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'pyproject.toml'
+      - 'poetry.lock'
+      - '**.py'
+      - '.github/workflows/python-tests.yml'
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - uses: actions/checkout@v4
