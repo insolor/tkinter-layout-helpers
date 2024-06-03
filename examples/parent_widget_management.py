@@ -2,6 +2,7 @@
 Specify a parent widget of another tkinter widget
 using a context manager
 """
+
 import tkinter as tk
 
 from tkinter_layout_helpers.parent_manager import set_parent

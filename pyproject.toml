@@ -17,8 +17,8 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-typing-extensions = ">=4.7.0"
+python = "^3.8"
+typing-extensions = "*"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4.4"
@@ -26,6 +26,42 @@ pytest-mock = "^3.11.1"
 pytest-cov = "^4.1.0"
 flake8 = "^5.0.4"
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.4.7"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py38"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D",  # Warning about docstrings are suppressed for now
+    "ANN002",
+    "ANN003",
+    "ANN101",
+    "C408",
+]
+fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "S101",  # Don't warn about using of asserts in tests
+    "ANN001",
+    "ANN201",
+    "ANN202",
+    "D",  # Don't warn about missing documentation in tests
+]
+
+"examples/*" = [
+    "ANN",
+    "D",
+    "S311",
+    "PL",
+    "INP001",
+    "ERA001",
+]
