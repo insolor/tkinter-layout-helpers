@@ -1,12 +1,11 @@
 from operator import attrgetter
-from typing import List
 
 from tkinter_layout_helpers import grid_manager
 
 
 def test_grid_builder(mocker):
     parent = mocker.Mock(name="parent")
-    labels: List[mocker.Mock] = [mocker.Mock(name=f"label_{i}") for i in range(4)]
+    labels: list[mocker.Mock] = [mocker.Mock(name=f"label_{i}") for i in range(4)]
     with grid_manager(parent, sticky="ew") as grid:
         grid.new_row().add(labels[0]).add(labels[1]).column_span(2)
         grid.new_row().add(labels[2]).column_span(3).add(labels[3]).column_span(4)
@@ -15,40 +14,30 @@ def test_grid_builder(mocker):
         grid.rowconfigure(0, weight=3)
         grid.rowconfigure(1, weight=4)
 
-    assert [
-        (call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list
-    ] == [
+    assert [(call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list] == [
         ((0,), dict(weight=1)),
         ((1,), dict(weight=2)),
     ]
 
-    assert [
-        (call.args, call.kwargs) for call in parent.grid_rowconfigure.call_args_list
-    ] == [
+    assert [(call.args, call.kwargs) for call in parent.grid_rowconfigure.call_args_list] == [
         ((0,), dict(weight=3)),
         ((1,), dict(weight=4)),
     ]
 
-    column_columnspan = [
-        [(cell.column_index, cell.column_span) for cell in row.cells]
-        for row in grid.rows
-    ]
+    column_columnspan = [[(cell.column_index, cell.column_span) for cell in row.cells] for row in grid.rows]
     assert column_columnspan == [
         [(0, 1), (1, 2)],
         [(0, 3), (3, 4)],
     ]
 
-    assert all(
-        [("sticky", "ew") in label.grid.call_args.kwargs.items() for label in labels]
-    )
+    assert all(("sticky", "ew") in label.grid.call_args.kwargs.items() for label in labels)
 
 
 def test_grid_span_and_skip(mocker):
     parent = mocker.Mock(name="parent")
     widget = mocker.Mock(name="widget")
     with grid_manager(parent, sticky="nsew") as grid:
-        grid.new_row().add(widget).column_span(2) \
-            .add(widget).row_span(2).configure(weight=1)
+        grid.new_row().add(widget).column_span(2).add(widget).row_span(2).configure(weight=1)
 
         grid.new_row().add(widget).configure(weight=1)
         grid.new_row().skip(1).add(widget).configure(weight=1)
@@ -66,14 +55,14 @@ def test_grid_span_and_skip(mocker):
     ]
 
     # Check .grid_columnconfigure() arguments
-    assert list(map(lambda x: (x.args, x.kwargs), parent.grid_columnconfigure.call_args_list)) == [
+    assert [(x.args, x.kwargs) for x in parent.grid_columnconfigure.call_args_list] == [
         ((0,), dict(weight=1)),
         ((1,), dict(weight=1)),
         ((2,), dict(weight=1)),
     ]
 
     # Check .grid_columnconfigure() arguments
-    assert list(map(lambda x: (x.args, x.kwargs), parent.grid_rowconfigure.call_args_list)) == [
+    assert [(x.args, x.kwargs) for x in parent.grid_rowconfigure.call_args_list] == [
         ((0,), dict(weight=1)),
         ((1,), dict(weight=1)),
         ((2,), dict(weight=1)),

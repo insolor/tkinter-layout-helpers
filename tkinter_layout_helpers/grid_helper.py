@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 import contextlib
-import tkinter as tk
 from dataclasses import dataclass, field
-from typing import Any, ContextManager, Dict, Generic, List
+from typing import TYPE_CHECKING, Any, ContextManager, Generic
 
 from typing_extensions import Self
 
 from tkinter_layout_helpers.parent_manager import TParent, set_parent
+
+if TYPE_CHECKING:
+    import tkinter as tk
 
 
 @dataclass
@@ -15,7 +17,7 @@ class Cell:
     widget: tk.Widget
     column_index: int
     row_index: int
-    options: Dict[str, Any] = field(default_factory=dict)
+    options: dict[str, Any] = field(default_factory=dict)
     column_span: int = field(default=1, init=False)
     row_span: int = field(default=1, init=False)
 
@@ -25,7 +27,7 @@ class Row:
     __grid: Grid
     __row_index: int
     __column_index: int = field(default=0, init=False)
-    __cells: List[Cell] = field(default_factory=list, init=False)
+    __cells: list[Cell] = field(default_factory=list, init=False)
 
     def skip(self, count: int) -> Self:
         self.__column_index += count
@@ -41,7 +43,7 @@ class Row:
                 self.__column_index,
                 self.__row_index,
                 options=kwargs,
-            )
+            ),
         )
 
         return self
@@ -58,21 +60,21 @@ class Row:
 
         return self
 
-    def configure(self, *args, **kwargs):
+    def configure(self, *args, **kwargs) -> None:
         self.__grid.parent.grid_rowconfigure(self.__row_index, *args, **kwargs)
 
     @property
-    def cells(self) -> List[Cell]:
+    def cells(self) -> list[Cell]:
         return self.__cells
 
 
 class Grid(Generic[TParent]):
     parent: TParent
-    rows: List[Row]
+    rows: list[Row]
     __row_index: int
-    __kwargs: Dict[str, Any]
+    __kwargs: dict[str, Any]
 
-    def __init__(self, parent: TParent, **kwargs):
+    def __init__(self, parent: TParent, **kwargs) -> None:
         self.parent = parent
         self.rows = []
         self.__row_index = 0
@@ -84,13 +86,13 @@ class Grid(Generic[TParent]):
         self.__row_index += 1
         return row
 
-    def columnconfigure(self, i, *args, **kwargs):
+    def columnconfigure(self, i: int, *args, **kwargs) -> None:
         self.parent.grid_columnconfigure(i, *args, **kwargs)
 
-    def rowconfigure(self, i, *args, **kwargs):
+    def rowconfigure(self, i: int, *args, **kwargs) -> None:
         self.parent.grid_rowconfigure(i, *args, **kwargs)
 
-    def build(self):
+    def build(self) -> None:
         for row in self.rows:
             for cell in row.cells:
                 # Common kwargs have the lowest priority
@@ -102,7 +104,7 @@ class Grid(Generic[TParent]):
                         row=cell.row_index,
                         columnspan=cell.column_span,
                         rowspan=cell.row_span,
-                    )
+                    ),
                 )
                 # Parameters of add() override all the previous parameters
                 kwargs.update(cell.options)

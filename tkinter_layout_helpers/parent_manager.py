@@ -8,11 +8,11 @@ TParent = TypeVar("TParent", bound=Union[tk.Tk, tk.Toplevel, tk.Widget])
 class DefaultRootWrapper:  # pragma: no cover
     @property
     def default_root(self) -> tk.Widget:
-        return tk._default_root  # type: ignore # noqa
+        return tk._default_root  # noqa: SLF001
 
     @default_root.setter
-    def default_root(self, value: TParent):
-        tk._default_root = value  # type: ignore
+    def default_root(self, value: TParent) -> None:
+        tk._default_root = value  # noqa: SLF001
 
 
 _default_root_wrapper = DefaultRootWrapper()
