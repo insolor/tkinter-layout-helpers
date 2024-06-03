@@ -20,13 +20,10 @@ classifiers = [
 python = "^3.8"
 typing-extensions = "*"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.4.4"
 pytest-mock = "^3.11.1"
 pytest-cov = "^4.1.0"
-flake8 = "^5.0.4"
-
-[tool.poetry.group.dev.dependencies]
 ruff = "^0.4.7"
 
 [build-system]
