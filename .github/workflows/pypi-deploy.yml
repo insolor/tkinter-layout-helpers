@@ -11,18 +11,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install poetry
-      run: pipx install poetry
-
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
-        cache: "poetry"
-        cache-dependency-path: poetry.lock
 
-    - name: Build and publish on pypi.org
-      env:
-        PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      run: poetry publish --build --username $PYPI_USERNAME --password $PYPI_PASSWORD
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+      with:
+        version: latest
+
+    - name: Build packages
+      run: uv build
+
+    - name: Publish on pypi.org
+      uses: pypa/gh-action-pypi-publish@v1.12.4

@@ -1,13 +1,16 @@
-[tool.poetry]
+[project]
 name = "tkinter_layout_helpers"
 version = "0.3.0"
 description = "A library which is intended to simplify a placement of widgets with .grid() and .pack() methods"
-authors = ["insolor <insolor@gmail.com>"]
-license = "MIT"
+authors = [{ name = "insolor", email = "insolor@gmail.com" }]
+requires-python = ">=3.9"
 readme = "README.md"
-homepage = "https://github.com/insolor/tkinter-layout-helpers"
-repository = "https://github.com/insolor/tkinter-layout-helpers"
-keywords = ["tkinter", "grid", "pack"]
+license = "MIT"
+keywords = [
+    "tkinter",
+    "grid",
+    "pack",
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",
@@ -15,23 +18,26 @@ classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+dependencies = ["typing-extensions"]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-typing-extensions = "*"
+[project.urls]
+Homepage = "https://github.com/insolor/tkinter-layout-helpers"
+Repository = "https://github.com/insolor/tkinter-layout-helpers"
 
-[tool.poetry.group.dev.dependencies]
-pytest = ">=7.4.4,<9.0.0"
-pytest-mock = "^3.11.1"
-pytest-cov = ">=4.1,<6.0"
-ruff = ">=0.4.7,<0.13.0"
+[dependency-groups]
+dev = [
+    "pytest>=7.4.4,<9.0.0",
+    "pytest-mock>=3.11.1,<4",
+    "pytest-cov>=4.1,<6.0",
+    "ruff>=0.4.7,<0.13.0",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 120
 
 [tool.ruff.lint]
