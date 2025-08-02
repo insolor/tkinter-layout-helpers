@@ -23,17 +23,28 @@ from tkinter_layout_helpers.grid_helper import grid_manager
 root = tk.Tk()
 
 with grid_manager(root, sticky=tk.EW) as grid:
-    grid.new_row() \
-        .add(tk.Label(text="0", width=20)) \
-        .add(tk.Label(text="1", width=20)) \
-        .add(tk.Label(text="2", width=20)) \
-        .add(tk.Label(text="3", width=20)) \
-        .add(tk.Label(text="4", width=20))
+    with grid.new_row() as row:
+        row.add(tk.Label(text="0", width=20))
+        row.add(tk.Label(text="1", width=20))
+        row.add(tk.Label(text="2", width=20))
+        row.add(tk.Label(text="3", width=20))
+        row.add(tk.Label(text="4", width=20))
 
-    grid.new_row().add(tk.Entry()).column_span(4).add(tk.Entry()).column_span(1)
-    grid.new_row().add(tk.Entry()).column_span(3).add(tk.Entry()).column_span(2)
-    grid.new_row().add(tk.Entry()).column_span(2).add(tk.Entry()).column_span(3)
-    grid.new_row().add(tk.Entry()).column_span(1).add(tk.Entry()).column_span(4)
+    with grid.new_row() as row:
+        row.add(tk.Entry()).column_span(4)
+        row.add(tk.Entry()).column_span(1)
+    
+    with grid.new_row() as row:
+        row.add(tk.Entry()).column_span(3)
+        row.add(tk.Entry()).column_span(2)
+    
+    with grid.new_row() as row:
+        row.add(tk.Entry()).column_span(2)
+        row.add(tk.Entry()).column_span(3)
+
+    with grid.new_row() as row:
+        row.add(tk.Entry()).column_span(1)
+        row.add(tk.Entry()).column_span(4)
 
     grid.columnconfigure(0, weight=1)
     grid.columnconfigure(1, weight=1)

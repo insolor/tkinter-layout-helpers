@@ -25,13 +25,20 @@ class Cell:
 
 
 @dataclass
-class Row:
+class Row(contextlib.AbstractContextManager):
     """Row contains a list of cells, which will be passed to the `.grid()` method."""
 
     __grid: Grid
     __row_index: int
     __column_index: int = field(default=0, init=False)
     __cells: list[Cell] = field(default_factory=list, init=False)
+
+    def __enter__(self) -> Self:
+        """Enter a context manager to add widgets to a row of a grid."""
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback) -> None:  # noqa: ANN001
+        """Empty `__exit__` method to satisfy the context manager protocol."""
 
     def skip(self, count: int) -> Self:
         """
