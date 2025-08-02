@@ -4,7 +4,6 @@
 [![documentation](https://img.shields.io/badge/docs-mkdocs-708FCC.svg?style=flat)](https://insolor.github.io/tkinter-layout-helpers/)
 [![Coverage Status](https://coveralls.io/repos/github/insolor/tkinter-layout-helpers/badge.svg?branch=master)](https://coveralls.io/github/insolor/tkinter-layout-helpers?branch=master)
 [![PyPI](https://img.shields.io/pypi/v/tkinter-layout-helpers)](https://pypi.org/project/tkinter-layout-helpers/)
-![Supported Python versions](https://img.shields.io/pypi/pyversions/tkinter-layout-helpers)
 
 A library which is intended to simplify a placement of widgets with `.grid()` and `.pack()` methods:
 
