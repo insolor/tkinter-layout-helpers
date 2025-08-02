@@ -40,7 +40,8 @@ class Row:
         """
         Skip a number of cells in a row of a grid.
 
-        :param count: number of columns to skip
+        Args:
+            count: number of columns to skip
         """
         self.__column_index += count
         return self
@@ -49,8 +50,9 @@ class Row:
         """
         Add a widget to a row of a grid.
 
-        :param widget: widget to add
-        :param kwargs: all additional parameters to configure the widget's position in the cell
+        Args:
+            widget: widget to add
+            kwargs: all additional parameters to configure the widget's position in the cell
         """
         if self.__cells:
             self.__column_index += self.__cells[-1].column_span
@@ -70,7 +72,8 @@ class Row:
         """
         Set the number of columns to span for the last added widget.
 
-        :param span: number of columns to span
+        Args:
+            span: number of columns to span
         """
         if self.__cells:
             self.__cells[-1].column_span = span
@@ -81,7 +84,8 @@ class Row:
         """
         Set the number of rows to span for the last added widget.
 
-        :param span: number of rows to span
+        Args:
+            span: number of rows to span
         """
         if self.__cells:
             self.__cells[-1].row_span = span
@@ -91,6 +95,10 @@ class Row:
     def configure(self, *args, **kwargs) -> None:
         """
         Configure the row of a grid. See `.grid_rowconfigure()` documentation of tkinter for details.
+
+        Args:
+            args: additional parameters to configure the row
+            kwargs: additional parameters to configure the row
         """
         self.__grid.parent.grid_rowconfigure(self.__row_index, *args, **kwargs)
 
@@ -114,9 +122,10 @@ class Grid(Generic[TParent]):
 
     def __init__(self, parent: TParent, **kwargs) -> None:
         """
-        :param parent: parent widget
-        :param kwargs: common parameters to configure the widgets of a grid.
-            Common parameters have lower priority than parameters set by `add()`.
+        Args:
+            parent: parent widget
+            kwargs: common parameters to configure the widgets of a grid.
+                Common parameters have lower priority than parameters set by `add()`.
         """
         self.parent = parent
         self.rows = []
@@ -135,6 +144,11 @@ class Grid(Generic[TParent]):
     def columnconfigure(self, i: int, *args, **kwargs) -> None:
         """
         Configure the column of a grid. See `.grid_columnconfigure()` documentation of tkinter for details.
+
+        Args:
+            i: column index
+            args: additional parameters to configure the column
+            kwargs: additional parameters to configure the column
         """
         self.parent.grid_columnconfigure(i, *args, **kwargs)
 
@@ -178,10 +192,10 @@ def grid_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextMa
     ```python
     with grid_manager(root, sticky=tk.EW) as grid:
         grid.new_row()
-            .add(tk.Label(text="0", width=20)) \
-            .add(tk.Label(text="1", width=20)) \
-            .add(tk.Label(text="2", width=20)) \
-            .add(tk.Label(text="3", width=20)) \
+            .add(tk.Label(text="0", width=20)) \\
+            .add(tk.Label(text="1", width=20)) \\
+            .add(tk.Label(text="2", width=20)) \\
+            .add(tk.Label(text="3", width=20)) \\
             .add(tk.Label(text="4", width=20))
     ```
     """

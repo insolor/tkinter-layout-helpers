@@ -23,7 +23,9 @@ def set_parent(parent: TParent) -> contextlib.AbstractAsyncContextManager[TParen
     """
     Set the parent widget for all widgets within the context, so you will not have to pass the parent for every created
     widget.
-    :param parent: parent widget
+
+    Args:
+        parent: parent widget
     """
     old_root = _default_root_wrapper.default_root
     _default_root_wrapper.default_root = parent
