@@ -39,8 +39,7 @@ def test_grid_with_row_context_manager(mocker):
     with grid_manager(parent, sticky="ew") as grid:
         with grid.new_row() as row:
             row.add(labels[0])
-            row.add(labels[1])
-            row.column_span(2)
+            row.add(labels[1]).column_span(2)
 
         with grid.new_row() as row:
             row.add(labels[2]).column_span(3)
