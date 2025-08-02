@@ -1,0 +1,26 @@
+site_name: Tkinter Layout Helpers
+
+theme:
+  name: material
+
+plugins:
+  - mkdocstrings
+  - search
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+nav:
+  - Overview: index.md
+  - Library API:
+    - public_api.md
+    - Internal API:
+      - internal_api_grid_helper.md
+      - internal_api_pack_helper.md
+      - internal_api_parent_manager.md

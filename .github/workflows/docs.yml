@@ -1,0 +1,37 @@
+name: Documentation
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/docs.yml'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - 'mkdocs.yml'
+      - 'docs/**'
+      - 'tkinter_layout_helpers/**'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: uv sync --only-group docs
+
+      - name: Deploy docs
+        run: uv run mkdocs gh-deploy --force
