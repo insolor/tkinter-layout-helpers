@@ -9,55 +9,109 @@ from tkinter_layout_helpers.parent_manager import TParent, set_parent
 
 
 def pack_expanded(widget: tk.Widget, **kwargs) -> None:
+    """
+    Pack a widget in a parent widget expanded.
+
+    :param widget: widget to pack
+    :param kwargs: all additional parameters to configure the widget's position in the cell
+    """
     kwargs.update(dict(fill=tk.BOTH, expand=True))
     widget.pack(**kwargs)
 
 
 class Packer(Generic[TParent]):
+    """
+    Builder class to pack widgets in a window or a frame.
+    """
     parent: TParent
     __kwargs: Mapping[str, Any]
 
     def __init__(self, parent: TParent, **kwargs) -> None:
+        """
+        :param parent: parent widget
+        :param kwargs: common parameters to configure the widgets placement with `.pack()` method.
+        """
         self.parent = parent
         self.__kwargs = kwargs
 
     def pack_all(self, *args: tk.Widget, **kwargs) -> None:
+        """
+        Pack all widgets in a window or a frame.
+
+        :param args: widgets to pack
+        :param kwargs: all additional parameters to configure the widgets placement with `.pack()` method.
+        """
         kwargs.update(self.__kwargs)
         for item in args:
             item.pack(**kwargs)
 
     def pack(self, widget: tk.Widget, **kwargs) -> Self:
+        """
+        Pack a widget in a window or a frame.
+        :param widget: widget to pack
+        :param kwargs: all additional parameters to configure the widget's position.
+        """
         kwargs.update(self.__kwargs)
         widget.pack(**kwargs)
         return self
 
     def pack_left(self, widget: tk.Widget, **kwargs) -> Self:
+        """
+        Pack a widget in a window or a frame to the left.
+        :param widget: widget to pack
+        :param kwargs: all additional parameters to configure the widget's position.
+        """
         kwargs.update(self.__kwargs)
         widget.pack(side=tk.LEFT, **kwargs)
         return self
 
     def pack_right(self, widget: tk.Widget, **kwargs) -> Self:
+        """
+        Pack a widget in a window or a frame to the right.
+        :param widget: widget to pack
+        :param kwargs: all additional parameters to configure the widget's position.
+        """
         kwargs.update(self.__kwargs)
         widget.pack(side=tk.RIGHT, **kwargs)
         return self
 
     def pack_top(self, widget: tk.Widget, **kwargs) -> Self:
+        """
+        Pack a widget in a window or a frame to the top.
+        :param widget: widget to pack
+        :param kwargs: all additional parameters to configure the widget's position.
+        """
         kwargs.update(self.__kwargs)
         widget.pack(side=tk.TOP, **kwargs)
         return self
 
     def pack_bottom(self, widget: tk.Widget, **kwargs) -> Self:
+        """
+        Pack a widget in a window or a frame to the bottom.
+        :param widget: widget to pack
+        :param kwargs: all additional parameters to configure the widget's position.
+        """
         kwargs.update(self.__kwargs)
         widget.pack(side=tk.BOTTOM, **kwargs)
         return self
 
     def pack_expanded(self, widget: tk.Widget, **kwargs) -> Self:
+        """
+        Pack a widget in a window or a frame expanded.
+        :param widget: widget to pack
+        :param kwargs: all additional parameters to configure the widget's position.
+        """
         pack_expanded(widget, **self.__kwargs, **kwargs)
         return self
 
 
 @contextlib.contextmanager
 def pack_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextManager[Packer]:
+    """
+    A context manager to help to place widgets in window or a frame using `.pack()` method.
+    Basicly, it is a wrapper around `Packer` class, but additionaly, it sets the parent widget of a grid
+    (within the `with` statement scope), so you don't need to specify it explicitly for every widget.
+    """
     with set_parent(parent):
         packer = Packer(parent, **kwargs)
         yield packer
