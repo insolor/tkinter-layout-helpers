@@ -46,7 +46,6 @@ ignore = [
     "D",  # Warning about docstrings are suppressed for now
     "ANN002",
     "ANN003",
-    "ANN101",
     "C408",
 ]
 fixable = ["ALL"]

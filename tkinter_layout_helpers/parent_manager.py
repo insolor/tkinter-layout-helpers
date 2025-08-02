@@ -1,6 +1,6 @@
 import contextlib
 import tkinter as tk
-from typing import ContextManager, TypeVar, Union
+from typing import TypeVar, Union
 
 TParent = TypeVar("TParent", bound=Union[tk.Tk, tk.Toplevel, tk.Widget])
 
@@ -19,7 +19,7 @@ _default_root_wrapper = DefaultRootWrapper()
 
 
 @contextlib.contextmanager
-def set_parent(parent: TParent) -> ContextManager[TParent]:
+def set_parent(parent: TParent) -> contextlib.AbstractAsyncContextManager[TParent]:
     old_root = _default_root_wrapper.default_root
     _default_root_wrapper.default_root = parent
     try:

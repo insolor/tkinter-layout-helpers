@@ -1,6 +1,7 @@
 import contextlib
 import tkinter as tk
-from typing import Any, ContextManager, Generic, Mapping
+from collections.abc import Mapping
+from typing import Any, Generic
 
 from typing_extensions import Self
 
@@ -56,7 +57,7 @@ class Packer(Generic[TParent]):
 
 
 @contextlib.contextmanager
-def pack_manager(parent: TParent, **kwargs) -> ContextManager[Packer]:
+def pack_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextManager[Packer]:
     with set_parent(parent):
         packer = Packer(parent, **kwargs)
         yield packer

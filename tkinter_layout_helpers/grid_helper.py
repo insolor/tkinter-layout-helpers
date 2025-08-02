@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import contextlib
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, ContextManager, Generic
+from typing import TYPE_CHECKING, Any, Generic
 
 from typing_extensions import Self
 
@@ -112,7 +112,7 @@ class Grid(Generic[TParent]):
 
 
 @contextlib.contextmanager
-def grid_manager(parent: TParent, **kwargs) -> ContextManager[Grid]:
+def grid_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextManager[Grid]:
     with set_parent(parent):
         grid = Grid(parent, **kwargs)
         yield grid
