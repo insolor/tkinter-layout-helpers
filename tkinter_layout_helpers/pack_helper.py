@@ -111,6 +111,17 @@ def pack_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextMa
     A context manager to help to place widgets in window or a frame using `.pack()` method.
     Basicly, it is a wrapper around `Packer` class, but additionaly, it sets the parent widget of a grid
     (within the `with` statement scope), so you don't need to specify it explicitly for every widget.
+
+    Usage example:
+
+    ```python
+    with pack_manager(root, fill=tk.BOTH, relief=tk.RAISED) as packer:
+        packer.pack_left(tk.Label(text="Left bar"))
+        packer.pack_top(tk.Label(text="Top bar"))
+        packer.pack_bottom(tk.Label(text="Bottom bar"))
+        packer.pack_right(tk.Label(text="Right bar"))
+        packer.pack_expanded(tk.Text())
+    ```
     """
     with set_parent(parent):
         packer = Packer(parent, **kwargs)
