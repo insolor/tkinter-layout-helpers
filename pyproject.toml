@@ -23,6 +23,7 @@ dependencies = ["typing-extensions"]
 [project.urls]
 Homepage = "https://github.com/insolor/tkinter-layout-helpers"
 Repository = "https://github.com/insolor/tkinter-layout-helpers"
+Documentation = "https://insolor.github.io/tkinter-layout-helpers"
 
 [dependency-groups]
 dev = [
