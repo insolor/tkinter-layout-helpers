@@ -1,6 +1,11 @@
+from __future__ import annotations
+
 import contextlib
 import tkinter as tk
-from typing import TypeVar, Union
+from typing import TYPE_CHECKING, TypeVar, Union
+
+if TYPE_CHECKING:
+    from collections.abc import Generator
 
 TParent = TypeVar("TParent", bound=Union[tk.Tk, tk.Toplevel, tk.Widget])
 
@@ -19,7 +24,7 @@ _default_root_wrapper = DefaultRootWrapper()
 
 
 @contextlib.contextmanager
-def set_parent(parent: TParent) -> contextlib.AbstractAsyncContextManager[TParent]:
+def set_parent(parent: TParent) -> Generator[TParent, None, None]:
     """
     Set the parent widget for all widgets created within the `with` statement scope,
     so you will not have to pass the parent for every created widget.

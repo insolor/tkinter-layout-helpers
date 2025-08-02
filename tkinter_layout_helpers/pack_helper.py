@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 import contextlib
 import tkinter as tk
-from collections.abc import Mapping
-from typing import Any, Generic
+from typing import TYPE_CHECKING, Any, Generic
 
 from typing_extensions import Self
 
 from tkinter_layout_helpers.parent_manager import TParent, set_parent
+
+if TYPE_CHECKING:
+    from collections.abc import Generator, Mapping
 
 
 def pack_expanded(widget: tk.Widget, **kwargs) -> None:
@@ -131,7 +135,7 @@ class Packer(Generic[TParent]):
 
 
 @contextlib.contextmanager
-def pack_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextManager[Packer]:
+def pack_manager(parent: TParent, **kwargs) -> Generator[Packer, None, None]:
     """
     A context manager to help to place widgets in window or a frame using `.pack()` method.
 

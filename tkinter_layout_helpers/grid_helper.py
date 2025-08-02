@@ -10,6 +10,7 @@ from tkinter_layout_helpers.parent_manager import TParent, set_parent
 
 if TYPE_CHECKING:
     import tkinter as tk
+    from collections.abc import Generator
 
 
 @dataclass
@@ -184,7 +185,7 @@ class Grid(Generic[TParent]):
 
 
 @contextlib.contextmanager
-def grid_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextManager[Grid]:
+def grid_manager(parent: TParent, **kwargs) -> Generator[Grid, None, None]:
     """
     A context manager to create a grid of widgets. It is intended to simplify a placement of widgets with `.grid()`.
 
