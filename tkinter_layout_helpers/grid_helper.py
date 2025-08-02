@@ -185,7 +185,7 @@ class Grid(Generic[TParent]):
 
 @contextlib.contextmanager
 def grid_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextManager[Grid]:
-    r"""
+    """
     A context manager to create a grid of widgets. It is intended to simplify a placement of widgets with `.grid()`.
 
     Basicly, it is a wrapper around `Grid` class, but additionaly, it sets the parent widget of a grid
@@ -195,12 +195,12 @@ def grid_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextMa
 
     ```python
     with grid_manager(root, sticky=tk.EW) as grid:
-        grid.new_row()
-            .add(tk.Label(text="0", width=20)) \
-            .add(tk.Label(text="1", width=20)) \
-            .add(tk.Label(text="2", width=20)) \
-            .add(tk.Label(text="3", width=20)) \
-            .add(tk.Label(text="4", width=20))
+        with grid.new_row() as row:
+            row.add(tk.Label(text="0", width=20))
+            row.add(tk.Label(text="1", width=20))
+            row.add(tk.Label(text="2", width=20))
+            row.add(tk.Label(text="3", width=20))
+            row.add(tk.Label(text="4", width=20))
     ```
     """
     with set_parent(parent):
