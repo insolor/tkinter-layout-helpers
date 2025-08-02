@@ -15,23 +15,26 @@ def pack_expanded(widget: tk.Widget, **kwargs) -> None:
     Args:
         widget: widget to pack
         kwargs: all additional parameters to configure the widget's position in the cell
+
     """
     kwargs.update(dict(fill=tk.BOTH, expand=True))
     widget.pack(**kwargs)
 
 
 class Packer(Generic[TParent]):
-    """
-    Builder class to pack widgets in a window or a frame.
-    """
+    """Builder class to pack widgets in a window or a frame."""
+
     parent: TParent
     __kwargs: Mapping[str, Any]
 
     def __init__(self, parent: TParent, **kwargs) -> None:
         """
+        Initialize a packer object.
+
         Args:
             parent: parent widget
             kwargs: common parameters to configure the widgets placement with `.pack()` method.
+
         """
         self.parent = parent
         self.__kwargs = kwargs
@@ -43,6 +46,7 @@ class Packer(Generic[TParent]):
         Args:
             args: widgets to pack
             kwargs: all additional parameters to configure the widgets placement with `.pack()` method.
+
         """
         kwargs.update(self.__kwargs)
         for item in args:
@@ -55,6 +59,7 @@ class Packer(Generic[TParent]):
         Args:
             widget: widget to pack
             kwargs: all additional parameters to configure the widget's position.
+
         """
         kwargs.update(self.__kwargs)
         widget.pack(**kwargs)
@@ -67,6 +72,7 @@ class Packer(Generic[TParent]):
         Args:
             widget: widget to pack
             kwargs: all additional parameters to configure the widget's position.
+
         """
         kwargs.update(self.__kwargs)
         widget.pack(side=tk.LEFT, **kwargs)
@@ -79,6 +85,7 @@ class Packer(Generic[TParent]):
         Args:
             widget: widget to pack
             kwargs: all additional parameters to configure the widget's position.
+
         """
         kwargs.update(self.__kwargs)
         widget.pack(side=tk.RIGHT, **kwargs)
@@ -91,6 +98,7 @@ class Packer(Generic[TParent]):
         Args:
             widget: widget to pack
             kwargs: all additional parameters to configure the widget's position.
+
         """
         kwargs.update(self.__kwargs)
         widget.pack(side=tk.TOP, **kwargs)
@@ -103,6 +111,7 @@ class Packer(Generic[TParent]):
         Args:
             widget: widget to pack
             kwargs: all additional parameters to configure the widget's position.
+
         """
         kwargs.update(self.__kwargs)
         widget.pack(side=tk.BOTTOM, **kwargs)
@@ -115,6 +124,7 @@ class Packer(Generic[TParent]):
         Args:
             widget: widget to pack
             kwargs: all additional parameters to configure the widget's position.
+
         """
         pack_expanded(widget, **self.__kwargs, **kwargs)
         return self
@@ -124,6 +134,7 @@ class Packer(Generic[TParent]):
 def pack_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextManager[Packer]:
     """
     A context manager to help to place widgets in window or a frame using `.pack()` method.
+
     Basicly, it is a wrapper around `Packer` class, but additionaly, it sets the parent widget of a grid
     (within the `with` statement scope), so you don't need to specify it explicitly for every widget.
 

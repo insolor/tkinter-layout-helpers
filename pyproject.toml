@@ -50,20 +50,24 @@ line-length = 120
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "D",  # Warning about docstrings are suppressed for now
     "ANN002",
     "ANN003",
     "C408",
+    "D100",
+    "D104",
+    "D205",
+    "D212",
+    "D401",
 ]
 fixable = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = [
-    "S101",  # Don't warn about using of asserts in tests
     "ANN001",
     "ANN201",
     "ANN202",
     "D",  # Don't warn about missing documentation in tests
+    "S101",  # Don't warn about using of asserts in tests
 ]
 
 "examples/*" = [

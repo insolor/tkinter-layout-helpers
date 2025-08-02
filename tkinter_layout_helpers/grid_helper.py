@@ -14,9 +14,8 @@ if TYPE_CHECKING:
 
 @dataclass
 class Cell:
-    """
-    Cell contains configuration for placing a widget in a grid, which will be passed to the `.grid()` method.
-    """
+    """Cell contains configuration for placing a widget in a grid, which will be passed to the `.grid()` method."""
+
     widget: tk.Widget
     column_index: int
     row_index: int
@@ -27,9 +26,7 @@ class Cell:
 
 @dataclass
 class Row:
-    """
-    Row contains a list of cells, which will be passed to the `.grid()` method.
-    """
+    """Row contains a list of cells, which will be passed to the `.grid()` method."""
 
     __grid: Grid
     __row_index: int
@@ -42,6 +39,7 @@ class Row:
 
         Args:
             count: number of columns to skip
+
         """
         self.__column_index += count
         return self
@@ -53,6 +51,7 @@ class Row:
         Args:
             widget: widget to add
             kwargs: all additional parameters to configure the widget's position in the cell
+
         """
         if self.__cells:
             self.__column_index += self.__cells[-1].column_span
@@ -74,6 +73,7 @@ class Row:
 
         Args:
             span: number of columns to span
+
         """
         if self.__cells:
             self.__cells[-1].column_span = span
@@ -86,6 +86,7 @@ class Row:
 
         Args:
             span: number of rows to span
+
         """
         if self.__cells:
             self.__cells[-1].row_span = span
@@ -99,21 +100,18 @@ class Row:
         Args:
             args: additional parameters to configure the row
             kwargs: additional parameters to configure the row
+
         """
         self.__grid.parent.grid_rowconfigure(self.__row_index, *args, **kwargs)
 
     @property
     def cells(self) -> list[Cell]:
-        """
-        Get all cells in a row of a grid.
-        """
+        """Get all cells in a row of a grid."""
         return self.__cells
 
 
 class Grid(Generic[TParent]):
-    """
-    Builder class to create a grid of widgets.
-    """
+    """Builder class to create a grid of widgets."""
 
     parent: TParent
     rows: list[Row]
@@ -122,10 +120,13 @@ class Grid(Generic[TParent]):
 
     def __init__(self, parent: TParent, **kwargs) -> None:
         """
+        Initialize Grid object.
+
         Args:
             parent: parent widget
             kwargs: common parameters to configure the widgets of a grid.
                 Common parameters have lower priority than parameters set by `add()`.
+
         """
         self.parent = parent
         self.rows = []
@@ -133,9 +134,7 @@ class Grid(Generic[TParent]):
         self.__kwargs = kwargs
 
     def new_row(self) -> Row:
-        """
-        Create a new row of a grid.
-        """
+        """Create a new row of a grid."""
         row = Row(self, self.__row_index)
         self.rows.append(row)
         self.__row_index += 1
@@ -149,19 +148,16 @@ class Grid(Generic[TParent]):
             i: column index
             args: additional parameters to configure the column
             kwargs: additional parameters to configure the column
+
         """
         self.parent.grid_columnconfigure(i, *args, **kwargs)
 
     def rowconfigure(self, i: int, *args, **kwargs) -> None:
-        """
-        Configure the row of a grid. See `.grid_rowconfigure()` documentation of tkinter for details.
-        """
+        """Configure the row of a grid. See `.grid_rowconfigure()` documentation of tkinter for details."""
         self.parent.grid_rowconfigure(i, *args, **kwargs)
 
     def build(self) -> None:
-        """
-        Build a grid. Call this method after all widgets have been added to the grid.
-        """
+        """Build a grid. Call this method after all widgets have been added to the grid."""
         for row in self.rows:
             for cell in row.cells:
                 # Common kwargs have the lowest priority
@@ -182,8 +178,9 @@ class Grid(Generic[TParent]):
 
 @contextlib.contextmanager
 def grid_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextManager[Grid]:
-    """
+    r"""
     A context manager to create a grid of widgets. It is intended to simplify a placement of widgets with `.grid()`.
+
     Basicly, it is a wrapper around `Grid` class, but additionaly, it sets the parent widget of a grid
     (within the `with` statement scope), so you don't need to specify it explicitly for every widget.
 
@@ -192,10 +189,10 @@ def grid_manager(parent: TParent, **kwargs) -> contextlib.AbstractAsyncContextMa
     ```python
     with grid_manager(root, sticky=tk.EW) as grid:
         grid.new_row()
-            .add(tk.Label(text="0", width=20)) \\
-            .add(tk.Label(text="1", width=20)) \\
-            .add(tk.Label(text="2", width=20)) \\
-            .add(tk.Label(text="3", width=20)) \\
+            .add(tk.Label(text="0", width=20)) \
+            .add(tk.Label(text="1", width=20)) \
+            .add(tk.Label(text="2", width=20)) \
+            .add(tk.Label(text="3", width=20)) \
             .add(tk.Label(text="4", width=20))
     ```
     """
