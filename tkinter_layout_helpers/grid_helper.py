@@ -18,21 +18,46 @@ class Cell:
     """Cell contains configuration for placing a widget in a grid, which will be passed to the `.grid()` method."""
 
     widget: tk.Widget
+    row: Row
     column_index: int
     row_index: int
     options: dict[str, Any] = field(default_factory=dict)
     column_span: int = field(default=1, init=False)
     row_span: int = field(default=1, init=False)
 
+    def set_column_span(self, span: int) -> Self:
+        """
+        Set the number of columns to span for the widget in the cell.
+
+        Args:
+            span: number of columns to span
+
+        """
+        self._column_span = span
+        if self.row.cells:
+            self.row.column_index += self.column_span
+        return self
+
+    def set_row_span(self, span: int) -> Self:
+        """
+        Set the number of rows to span for the widget in the cell.
+
+        Args:
+            span: number of rows to span
+
+        """
+        self._row_span = span
+        return self
+
 
 @dataclass
 class Row(contextlib.AbstractContextManager):
     """Row contains a list of cells, which will be passed to the `.grid()` method."""
 
-    __grid: Grid
-    __row_index: int
-    __column_index: int = field(default=0, init=False)
-    __cells: list[Cell] = field(default_factory=list, init=False)
+    grid: Grid
+    row_index: int
+    column_index: int = field(default=0, init=False)
+    cells: list[Cell] = field(default_factory=list, init=False)
 
     def __enter__(self) -> Self:
         """Enter a context manager to add widgets to a row of a grid."""
@@ -49,7 +74,7 @@ class Row(contextlib.AbstractContextManager):
             count: number of columns to skip
 
         """
-        self.__column_index += count
+        self.column_index += count
         return self
 
     def add(self, widget: tk.Widget, **kwargs) -> Self:
@@ -61,45 +86,19 @@ class Row(contextlib.AbstractContextManager):
             kwargs: all additional parameters to configure the widget's position in the cell
 
         """
-        if self.__cells:
-            self.__column_index += self.__cells[-1].column_span
+        if self.cells:
+            self.column_index += self.cells[-1].column_span
 
-        self.__cells.append(
-            Cell(
-                widget,
-                self.__column_index,
-                self.__row_index,
-                options=kwargs,
-            ),
+        cell = Cell(
+            widget,
+            self,
+            self.column_index,
+            self.row_index,
+            options=kwargs,
         )
+        self.cells.append(cell)
 
-        return self
-
-    def column_span(self, span: int) -> Self:
-        """
-        Set the number of columns to span for the last added widget.
-
-        Args:
-            span: number of columns to span
-
-        """
-        if self.__cells:
-            self.__cells[-1].column_span = span
-
-        return self
-
-    def row_span(self, span: int) -> Self:
-        """
-        Set the number of rows to span for the last added widget.
-
-        Args:
-            span: number of rows to span
-
-        """
-        if self.__cells:
-            self.__cells[-1].row_span = span
-
-        return self
+        return cell
 
     def configure(self, *args, **kwargs) -> None:
         """
@@ -110,12 +109,7 @@ class Row(contextlib.AbstractContextManager):
             kwargs: additional parameters to configure the row
 
         """
-        self.__grid.parent.grid_rowconfigure(self.__row_index, *args, **kwargs)
-
-    @property
-    def cells(self) -> list[Cell]:
-        """Get all cells in a row of a grid."""
-        return self.__cells
+        self.grid.parent.grid_rowconfigure(self.row_index, *args, **kwargs)
 
 
 class Column:
@@ -168,8 +162,8 @@ class Grid(Generic[TParent]):
 
     parent: TParent
     rows: list[Row]
-    __row_index: int
-    __kwargs: dict[str, Any]
+    row_index: int
+    kwargs: dict[str, Any]
 
     def __init__(self, parent: TParent, **kwargs) -> None:
         """
@@ -183,14 +177,14 @@ class Grid(Generic[TParent]):
         """
         self.parent = parent
         self.rows = []
-        self.__row_index = 0
-        self.__kwargs = kwargs
+        self.row_index = 0
+        self.kwargs = kwargs
 
     def new_row(self) -> Row:
         """Create a new row of a grid."""
-        row = Row(self, self.__row_index)
+        row = Row(self, self.row_index)
         self.rows.append(row)
-        self.__row_index += 1
+        self.row_index += 1
         return row
 
     def columnconfigure(self, i: int, *args, **kwargs) -> None:
@@ -219,7 +213,7 @@ class Grid(Generic[TParent]):
         for row in self.rows:
             for cell in row.cells:
                 # Common kwargs have the lowest priority
-                kwargs = self.__kwargs.copy()
+                kwargs = self.kwargs.copy()
                 # Then go parameters set by coll_span() and row_span()
                 kwargs.update(
                     dict(

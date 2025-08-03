@@ -6,8 +6,8 @@ root = tk.Tk()
 
 with grid_manager(root, sticky=tk.NSEW) as grid:
     with grid.new_row() as row:
-        row.add(tk.Label(text="0", relief=tk.RAISED)).column_span(2)
-        row.add(tk.Label(text="1", relief=tk.RAISED)).row_span(2)
+        row.add(tk.Label(text="0", relief=tk.RAISED)).set_column_span(2)
+        row.add(tk.Label(text="1", relief=tk.RAISED)).set_row_span(2)
         row.configure(weight=1)
 
     with grid.new_row() as row:
