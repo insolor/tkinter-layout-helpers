@@ -1,11 +1,17 @@
+from __future__ import annotations
+
 from operator import attrgetter
+from typing import TYPE_CHECKING
 
 from tkinter_layout_helpers import grid_manager
+
+if TYPE_CHECKING:
+    from pytest_mock import MockType
 
 
 def test_grid_with_row_context_manager(mocker):
     parent = mocker.Mock(name="parent")
-    labels: list[mocker.Mock] = [mocker.Mock(name=f"label_{i}") for i in range(4)]
+    labels: list[MockType] = [mocker.Mock(name=f"label_{i}") for i in range(4)]
     with grid_manager(parent, sticky="ew") as grid:
         with grid.new_row() as row:
             row.add(labels[0])
