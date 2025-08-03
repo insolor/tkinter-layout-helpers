@@ -60,7 +60,7 @@ def test_grid_span_and_skip(mocker):
         with grid.new_row() as row:
             row.skip(1).add(widget)
             row.configure(weight=1)
-        
+
         for column in grid.columns:
             column.configure(weight=1)
 
