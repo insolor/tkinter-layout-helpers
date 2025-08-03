@@ -33,9 +33,7 @@ class Cell:
             span: number of columns to span
 
         """
-        self._column_span = span
-        if self.row.cells:
-            self.row.column_index += self.column_span
+        self.column_span = span
         return self
 
     def set_row_span(self, span: int) -> Self:
