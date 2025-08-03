@@ -44,7 +44,7 @@ class Cell:
             span: number of rows to span
 
         """
-        self._row_span = span
+        self.row_span = span
         return self
 
 
