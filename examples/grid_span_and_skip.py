@@ -19,8 +19,7 @@ with grid_manager(root, sticky=tk.NSEW) as grid:
         row.add(tk.Label(text="3", relief=tk.RAISED))
         row.configure(weight=1)
 
-    grid.columnconfigure(0, weight=1)
-    grid.columnconfigure(1, weight=1)
-    grid.columnconfigure(2, weight=1)
+    for column in grid.columns:
+        column.configure(weight=1)
 
 root.mainloop()

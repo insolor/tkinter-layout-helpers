@@ -28,11 +28,8 @@ with grid_manager(root, sticky=tk.EW) as grid:
         row.add(tk.Entry()).column_span(1)
         row.add(tk.Entry()).column_span(4)
 
-    grid.columnconfigure(0, weight=1)
-    grid.columnconfigure(1, weight=1)
-    grid.columnconfigure(2, weight=1)
-    grid.columnconfigure(3, weight=1)
-    grid.columnconfigure(4, weight=1)
+    for column in grid.columns:
+        column.configure(weight=1)
 
 # The code above gives the same result as the code below:
 # tk.Label(root, text=0, width=20).grid(row=0, column=0, sticky=tk.EW)
@@ -53,10 +50,7 @@ with grid_manager(root, sticky=tk.EW) as grid:
 # tk.Entry(root).grid(column=0, row=4, columnspan=1, sticky=tk.EW)
 # tk.Entry(root).grid(column=1, row=4, columnspan=4, sticky=tk.EW)
 
-# root.grid_columnconfigure(0, weight=1)
-# root.grid_columnconfigure(1, weight=1)
-# root.grid_columnconfigure(2, weight=1)
-# root.grid_columnconfigure(3, weight=1)
-# root.grid_columnconfigure(4, weight=1)
+# for i in range(5):
+#     root.grid_columnconfigure(i, weight=1)
 
 root.mainloop()

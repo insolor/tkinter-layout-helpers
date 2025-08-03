@@ -70,6 +70,7 @@ fixable = ["ALL"]
     "ANN202",
     "D",  # Don't warn about missing documentation in tests
     "S101",  # Don't warn about using of asserts in tests
+    "PLR2004",  # Don't warn about magic values in tests
 ]
 
 "examples/*" = [

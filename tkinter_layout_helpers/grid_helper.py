@@ -118,6 +118,50 @@ class Row(contextlib.AbstractContextManager):
         return self.__cells
 
 
+class Column:
+    """Virtual column object of a grid to configure "real" columns in the grid."""
+
+    def __init__(self, grid: Grid, index: int) -> None:
+        """Initialize a column object."""
+        self.grid = grid
+        self.index = index
+
+    def configure(self, *args, **kwargs) -> None:
+        """Configure the column of a grid. See `.grid_columnconfigure()` documentation of tkinter for details."""
+        self.grid.parent.grid_columnconfigure(self.index, *args, **kwargs)
+
+
+class Columns[Iterable]:
+    """Proxy object to configure columns of a grid."""
+
+    __len: int
+
+    def __init__(self, grid: Grid) -> None:
+        """Initialize a columns object."""
+        self.grid = grid
+        self.__len = self._get_max_column()
+
+    def _get_max_column(self) -> int:
+        """Calculate max count of columns in all rows in the grid."""
+        if not self.grid.rows:
+            return 0
+
+        return max(row.cells[-1].column_index + row.cells[-1].column_span for row in self.grid.rows)
+
+    def __getitem__(self, index: int) -> Column:
+        """Get a column object by index."""
+        if not (0 <= index < self.__len):
+            raise IndexError(
+                f"Index {index} is out of range. Max index is {self.__len - 1}",
+            )
+
+        return Column(self.grid, index)
+
+    def __len__(self) -> int:
+        """Get count of columns in the grid."""
+        return self.__len
+
+
 class Grid(Generic[TParent]):
     """Builder class to create a grid of widgets."""
 
@@ -159,6 +203,11 @@ class Grid(Generic[TParent]):
 
         """
         self.parent.grid_columnconfigure(i, *args, **kwargs)
+
+    @property
+    def columns(self) -> Columns:
+        """Get a proxy object to configure the columns of a grid."""
+        return Columns(self)
 
     def rowconfigure(self, i: int, *args, **kwargs) -> None:
         """Configure the row of a grid. See `.grid_rowconfigure()` documentation of tkinter for details."""

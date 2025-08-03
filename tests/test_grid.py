@@ -3,36 +3,6 @@ from operator import attrgetter
 from tkinter_layout_helpers import grid_manager
 
 
-def test_grid_builder(mocker):
-    parent = mocker.Mock(name="parent")
-    labels: list[mocker.Mock] = [mocker.Mock(name=f"label_{i}") for i in range(4)]
-    with grid_manager(parent, sticky="ew") as grid:
-        grid.new_row().add(labels[0]).add(labels[1]).column_span(2)
-        grid.new_row().add(labels[2]).column_span(3).add(labels[3]).column_span(4)
-        grid.columnconfigure(0, weight=1)
-        grid.columnconfigure(1, weight=2)
-        grid.rowconfigure(0, weight=3)
-        grid.rowconfigure(1, weight=4)
-
-    assert [(call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list] == [
-        ((0,), dict(weight=1)),
-        ((1,), dict(weight=2)),
-    ]
-
-    assert [(call.args, call.kwargs) for call in parent.grid_rowconfigure.call_args_list] == [
-        ((0,), dict(weight=3)),
-        ((1,), dict(weight=4)),
-    ]
-
-    column_columnspan = [[(cell.column_index, cell.column_span) for cell in row.cells] for row in grid.rows]
-    assert column_columnspan == [
-        [(0, 1), (1, 2)],
-        [(0, 3), (3, 4)],
-    ]
-
-    assert all(("sticky", "ew") in label.grid.call_args.kwargs.items() for label in labels)
-
-
 def test_grid_with_row_context_manager(mocker):
     parent = mocker.Mock(name="parent")
     labels: list[mocker.Mock] = [mocker.Mock(name=f"label_{i}") for i in range(4)]
@@ -45,10 +15,15 @@ def test_grid_with_row_context_manager(mocker):
             row.add(labels[2]).column_span(3)
             row.add(labels[3]).column_span(4)
 
-        grid.columnconfigure(0, weight=1)
-        grid.columnconfigure(1, weight=2)
-        grid.rowconfigure(0, weight=3)
-        grid.rowconfigure(1, weight=4)
+        grid.columns[0].configure(weight=1)
+        grid.columns[1].configure(weight=2)
+        grid.rows[0].configure(weight=3)
+        grid.rows[1].configure(weight=4)
+
+    # 1 row: widget with span 1 + widget with span 2 = 3 columns in grid total
+    # 2 row: widget with span 3 + widget with span 4 = 7 columns in grid total
+    # So, the total number of columns should be 7
+    assert len(grid.columns) == 7
 
     assert [(call.args, call.kwargs) for call in parent.grid_columnconfigure.call_args_list] == [
         ((0,), dict(weight=1)),

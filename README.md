@@ -45,11 +45,8 @@ with grid_manager(root, sticky=tk.EW) as grid:
         row.add(tk.Entry()).column_span(1)
         row.add(tk.Entry()).column_span(4)
 
-    grid.columnconfigure(0, weight=1)
-    grid.columnconfigure(1, weight=1)
-    grid.columnconfigure(2, weight=1)
-    grid.columnconfigure(3, weight=1)
-    grid.columnconfigure(4, weight=1)
+    for column in grid.columns:
+        column.configure(weight=1)
 
 root.mainloop()
 ```
