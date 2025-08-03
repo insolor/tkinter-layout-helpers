@@ -131,7 +131,7 @@ class Column:
         self.grid.parent.grid_columnconfigure(self.index, *args, **kwargs)
 
 
-class Columns[Iterable]:
+class Columns:
     """Proxy object to configure columns of a grid."""
 
     __len: int
@@ -151,8 +151,9 @@ class Columns[Iterable]:
     def __getitem__(self, index: int) -> Column:
         """Get a column object by index."""
         if not (0 <= index < self.__len):
+            msg = f"Index {index} is out of range. Max index is {self.__len - 1}"
             raise IndexError(
-                f"Index {index} is out of range. Max index is {self.__len - 1}",
+                msg,
             )
 
         return Column(self.grid, index)
