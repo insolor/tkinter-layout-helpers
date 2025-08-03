@@ -9,11 +9,11 @@ def test_grid_with_row_context_manager(mocker):
     with grid_manager(parent, sticky="ew") as grid:
         with grid.new_row() as row:
             row.add(labels[0])
-            row.add(labels[1]).column_span(2)
+            row.add(labels[1]).set_column_span(2)
 
         with grid.new_row() as row:
-            row.add(labels[2]).column_span(3)
-            row.add(labels[3]).column_span(4)
+            row.add(labels[2]).set_column_span(3)
+            row.add(labels[3]).set_column_span(4)
 
         grid.columns[0].configure(weight=1)
         grid.columns[1].configure(weight=2)
@@ -48,14 +48,21 @@ def test_grid_span_and_skip(mocker):
     parent = mocker.Mock(name="parent")
     widget = mocker.Mock(name="widget")
     with grid_manager(parent, sticky="nsew") as grid:
-        grid.new_row().add(widget).column_span(2).add(widget).row_span(2).configure(weight=1)
+        with grid.new_row() as row:
+            row.add(widget).set_column_span(2)
+            row.add(widget).set_row_span(2)
+            row.configure(weight=1)
 
-        grid.new_row().add(widget).configure(weight=1)
-        grid.new_row().skip(1).add(widget).configure(weight=1)
+        with grid.new_row() as row:
+            row.add(widget)
+            row.configure(weight=1)
 
-        grid.columnconfigure(0, weight=1)
-        grid.columnconfigure(1, weight=1)
-        grid.columnconfigure(2, weight=1)
+        with grid.new_row() as row:
+            row.skip(1).add(widget)
+            row.configure(weight=1)
+
+        for column in grid.columns:
+            column.configure(weight=1)
 
     # Check widget .grid() arguments
     assert list(map(attrgetter("kwargs"), widget.grid.call_args_list)) == [

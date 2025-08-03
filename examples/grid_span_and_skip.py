@@ -3,11 +3,12 @@ import tkinter as tk
 from tkinter_layout_helpers import grid_manager
 
 root = tk.Tk()
+root.geometry("300x300")
 
 with grid_manager(root, sticky=tk.NSEW) as grid:
     with grid.new_row() as row:
-        row.add(tk.Label(text="0", relief=tk.RAISED)).column_span(2)
-        row.add(tk.Label(text="1", relief=tk.RAISED)).row_span(2)
+        row.add(tk.Label(text="0", relief=tk.RAISED)).set_column_span(2)
+        row.add(tk.Label(text="1", relief=tk.RAISED)).set_row_span(2)
         row.configure(weight=1)
 
     with grid.new_row() as row:

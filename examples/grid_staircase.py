@@ -13,20 +13,20 @@ with grid_manager(root, sticky=tk.EW) as grid:
         row.add(tk.Label(text="4", width=20))
 
     with grid.new_row() as row:
-        row.add(tk.Entry()).column_span(4)
-        row.add(tk.Entry()).column_span(1)
+        row.add(tk.Entry()).set_column_span(4)
+        row.add(tk.Entry()).set_column_span(1)
 
     with grid.new_row() as row:
-        row.add(tk.Entry()).column_span(3)
-        row.add(tk.Entry()).column_span(2)
+        row.add(tk.Entry()).set_column_span(3)
+        row.add(tk.Entry()).set_column_span(2)
 
     with grid.new_row() as row:
-        row.add(tk.Entry()).column_span(2)
-        row.add(tk.Entry()).column_span(3)
+        row.add(tk.Entry()).set_column_span(2)
+        row.add(tk.Entry()).set_column_span(3)
 
     with grid.new_row() as row:
-        row.add(tk.Entry()).column_span(1)
-        row.add(tk.Entry()).column_span(4)
+        row.add(tk.Entry()).set_column_span(1)
+        row.add(tk.Entry()).set_column_span(4)
 
     for column in grid.columns:
         column.configure(weight=1)
