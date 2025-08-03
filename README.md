@@ -53,7 +53,7 @@ root.mainloop()
 
 Gives the following result:
 
-![image](assets/staircase.png)
+![image](https://github.com/insolor/tkinter-layout-helpers/raw/master/assets/staircase.png)
 
 Example for the `pack_manager`:
 
@@ -76,6 +76,6 @@ root.mainloop()
 
 Result:
 
-![image](assets/pack_sidebars.png)
+![image](https://github.com/insolor/tkinter-layout-helpers/raw/master/assets/pack_sidebars.png)
 
 More examples see here: [examples](https://github.com/insolor/tkinter_layout_helpers/tree/master/examples)
