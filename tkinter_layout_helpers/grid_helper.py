@@ -77,7 +77,7 @@ class Row(contextlib.AbstractContextManager):
         self.column_index += count
         return self
 
-    def add(self, widget: tk.Widget, **kwargs) -> Self:
+    def add(self, widget: tk.Widget, **kwargs) -> Cell:
         """
         Add a widget to a row of a grid.
 
