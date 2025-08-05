@@ -2,7 +2,7 @@
 
 [![Python package](https://github.com/insolor/tkinter-layout-helpers/actions/workflows/python-tests.yml/badge.svg)](https://github.com/insolor/tkinter-layout-helpers/actions/workflows/python-tests.yml)
 [![documentation](https://img.shields.io/badge/docs-mkdocs-708FCC.svg?style=flat)](https://insolor.github.io/tkinter-layout-helpers/)
-[![Coverage Status](https://coveralls.io/repos/github/insolor/tkinter-layout-helpers/badge.svg?branch=master)](https://coveralls.io/github/insolor/tkinter-layout-helpers?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/insolor/tkinter-layout-helpers/badge.svg?branch=main)](https://coveralls.io/github/insolor/tkinter-layout-helpers?branch=main)
 [![PyPI](https://img.shields.io/pypi/v/tkinter-layout-helpers)](https://pypi.org/project/tkinter-layout-helpers/)
 
 A library which is intended to simplify a placement of widgets with `.grid()` and `.pack()` methods:
@@ -53,7 +53,7 @@ root.mainloop()
 
 Gives the following result:
 
-![image](https://github.com/insolor/tkinter-layout-helpers/raw/master/assets/staircase.png)
+![image](https://github.com/insolor/tkinter-layout-helpers/raw/main/assets/staircase.png)
 
 Example for the `pack_manager`:
 
@@ -76,6 +76,6 @@ root.mainloop()
 
 Result:
 
-![image](https://github.com/insolor/tkinter-layout-helpers/raw/master/assets/pack_sidebars.png)
+![image](https://github.com/insolor/tkinter-layout-helpers/raw/main/assets/pack_sidebars.png)
 
-More examples see here: [examples](https://github.com/insolor/tkinter_layout_helpers/tree/master/examples)
+More examples see here: [examples](https://github.com/insolor/tkinter_layout_helpers/tree/main/examples)

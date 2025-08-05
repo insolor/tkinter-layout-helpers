@@ -2,7 +2,7 @@ name: Python tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - 'pyproject.toml'
       - 'uv.lock'
@@ -10,7 +10,7 @@ on:
       - '.github/workflows/python-tests.yml'
 
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - 'pyproject.toml'
       - 'uv.lock'
