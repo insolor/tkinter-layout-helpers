@@ -63,7 +63,9 @@ jobs:
     runs-on: ubuntu-latest
     container: python:3-slim
     steps:
+    - name: Install coveralls
+      run: pip3 install --upgrade coveralls
     - name: Finished
-      run: pipx run coveralls --finish
+      run: coveralls --finish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
