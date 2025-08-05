@@ -18,7 +18,7 @@ on:
       - '.github/workflows/python-tests.yml'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -51,6 +51,21 @@ jobs:
 
     - name: Upload coverage data to coveralls.io
       run: |
-        uvx coveralls --service=github
+        pipx run coveralls
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_FLAG_NAME: ${{ matrix.python-version }}
+        COVERALLS_PARALLEL: true
+
+  coveralls:
+    name: Indicate completion to coveralls.io
+    needs: test
+    runs-on: ubuntu-latest
+    container: python:3-slim
+    steps:
+    - name: Install coveralls
+      run: pip3 install --upgrade coveralls
+    - name: Finished
+      run: coveralls --finish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
