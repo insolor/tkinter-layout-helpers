@@ -7,6 +7,7 @@
 
 A library which is intended to simplify a placement of widgets with `.grid()` and `.pack()` methods:
 
+- avoid manual passing a parent container when creating a widget;
 - avoid manual calculation of indices of columns and rows when you add a widget;
 - avoid typing-in some common parameters (like `sticky=tk.EW`) each time you add a widget;
 - and more...
