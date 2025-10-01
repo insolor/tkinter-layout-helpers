@@ -9,6 +9,9 @@ updates:
         patterns:
           - "pytest*"
           - "ruff"
+      docs:
+        patterns:
+          - "mkdocs*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
