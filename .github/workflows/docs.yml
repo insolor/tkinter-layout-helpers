@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -26,5 +29,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --only-group docs
 
+      - name: Build docs
+        run: uv run mkdocs build
+
       - name: Deploy docs
+        if: github.event_name != 'pull_request'
         run: uv run mkdocs gh-deploy --force
