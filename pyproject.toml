@@ -31,8 +31,8 @@ Documentation = "https://insolor.github.io/tkinter-layout-helpers"
 dev = [
     "pytest>=7.4.4,<9.0.0",
     "pytest-mock>=3.11.1,<4",
-    "pytest-cov>=4.1,<6.0",
-    "ruff>=0.4.7,<0.13.0",
+    "pytest-cov>=4.1,<8.0",
+    "ruff>=0.4.7,<0.15.0",
 ]
 docs = [
     "mkdocs>=1.6.1",
