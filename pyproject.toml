@@ -3,7 +3,7 @@ name = "tkinter_layout_helpers"
 version = "0.6.0"
 description = "A library which is intended to simplify a placement of widgets with .grid() and .pack() methods"
 authors = [{ name = "insolor", email = "insolor@gmail.com" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README.md"
 license = "MIT"
 keywords = [
@@ -29,7 +29,7 @@ Documentation = "https://insolor.github.io/tkinter-layout-helpers"
 
 [dependency-groups]
 dev = [
-    "pytest>=7.4.4,<9.0.0",
+    "pytest>=9.0.3,<10.0.0",
     "pytest-mock>=3.11.1,<4",
     "pytest-cov>=4.1,<8.0",
     "ruff>=0.4.7,<0.16.0",
