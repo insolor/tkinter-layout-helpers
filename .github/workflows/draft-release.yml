@@ -28,7 +28,7 @@ jobs:
           echo "version=$(uv version --short)" >> "$GITHUB_OUTPUT"
 
       - name: Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: dist/*
           tag_name: ${{ steps.build.outputs.version }}
