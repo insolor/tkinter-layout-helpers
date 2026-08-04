@@ -30,6 +30,8 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
-          files: dist/*
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
           tag_name: ${{ steps.build.outputs.version }}
           draft: true
